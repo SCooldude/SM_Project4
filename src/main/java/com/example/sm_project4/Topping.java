@@ -1,2 +1,4 @@
-package com.example.sm_project4;public enum Topping {
+package com.example.sm_project4;
+
+public enum  Topping {
 }
