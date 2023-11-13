@@ -8,3 +8,4 @@ module com.example.sm_project4 {
     opens com.example.sm_project4 to javafx.fxml;
     exports com.example.sm_project4;
 }
+//hi
