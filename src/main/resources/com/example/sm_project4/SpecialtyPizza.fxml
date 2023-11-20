@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.sm_project4.SpecialtyPizzasController"
-            prefHeight="400.0" prefWidth="600.0">
+<Pane prefHeight="475.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sm_project4.SpecialtyPizzasController">
 
-</AnchorPane>
+    <ComboBox fx:id="pizzaDropdown" layoutX="300.0" layoutY="10" onAction="#handlePizzaSelection" promptText="Select Pizza">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Deluxe" />
+                <String fx:value="Supreme" />
+                <String fx:value="Meatzza" />
+                <String fx:value="Pepperoni" />
+                <String fx:value="Seafood" />
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <VBox layoutX="300.0" layoutY="40" spacing="10">
+        <RadioButton text="Small">
+         <toggleGroup>
+            <ToggleGroup fx:id="size" />
+         </toggleGroup></RadioButton>
+        <RadioButton text="Medium" toggleGroup="$size" />
+        <RadioButton text="Large" toggleGroup="$size" />
+    </VBox>
+
+    <ImageView fx:id="pizzaImage" fitHeight="200" fitWidth="200" layoutX="10" layoutY="10" />
+
+    <Label layoutX="10" layoutY="230" text="Toppings" />
+
+    <ListView fx:id="toppingsListView" layoutX="10" layoutY="250" maxHeight="200.0">
+        
+    </ListView>
+
+    <Label layoutX="300" layoutY="250" text="Sauce" />
+
+    <TextField  layoutX="300" layoutY="270" text="tomato" />
+
+    <CheckBox  layoutX="300"  layoutY="300" fx:id="extra_sauce" text="Extra Sauce" />
+    <CheckBox  layoutX="300" layoutY="320" fx:id="extra_cheese" text="Extra Cheese" />
+
+    <Label layoutX="300" layoutY="360" text="Price $" />
+
+    <TextField layoutX="350" layoutY="355" fx:id="Amount" />
+
+    <Button layoutX="300" layoutY="390" text="Add to Order" onAction="#handleAddToOrder" />
+
+</Pane>

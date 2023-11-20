@@ -1,16 +1,31 @@
 package com.example.sm_project4;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 public class MainMenuController {
-    @FXML
-    private Label welcomeText;
+    private HelloApplication mainApplication;
 
     @FXML
-    protected void onHelloButtonClick() {
+    private void handleBuildYourOwn() {
+        mainApplication.openWindow("BuildYourOwnPizza.fxml", "Build Your Own Pizza");
+    }
 
+    @FXML
+    private void handleOrderSpecialtyPizzas() {
+        mainApplication.openWindow("SpecialtyPizza.fxml", "Specialty Pizzas");
+    }
 
-        welcomeText.setText("Welcome to JavaFX Application!");
+    @FXML
+    private void handleCurrentOrder() {
+        mainApplication.openWindow("CurrentOrder.fxml", "Current Order");
+    }
+
+    @FXML
+    private void handleStoreOrders() {
+        mainApplication.openWindow("StoreOrder.fxml", "Store Orders");
+    }
+
+    public void setMainApplication(HelloApplication mainApplication) {
+        this.mainApplication = mainApplication;
     }
 }
