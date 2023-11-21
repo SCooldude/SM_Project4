@@ -126,11 +126,20 @@ public class BuildYourOwnPizzaController {
         additionalToppingsListView.getItems().clear();
         selectedToppingsListView.getItems().clear();
 
-        // Populate additional toppings list
         additionalToppingsListView.getItems().addAll(
-                "Topping 1", "Topping 2", "Topping 3", "Topping 4", "Topping 5",
-                "Topping 6", "Topping 7", "Topping 8", "Topping 9", "Topping 10",
-                "Topping 11", "Topping 12", "Topping 13"
+                "Sausage",
+                "Chicken",
+                "Beef",
+                "Ham",
+                "Pepperoni",
+                "Shrimp",
+                "Squid",
+                "CrabMeats",
+                "GreenPepper",
+                "Onion",
+                "Mushroom",
+                "Pineapple",
+                "BlackOlives"
         );
 
         two_sauce.selectToggle(two_sauce.getToggles().get(0));

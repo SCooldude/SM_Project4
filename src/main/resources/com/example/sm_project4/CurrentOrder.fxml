@@ -10,11 +10,9 @@
             <Font size="18.0" />
         </font>
     </Label>
-    <HBox layoutX="14.0" layoutY="44.0">
-        <Label text="Order Number" />
-        <TextField fx:id="orderNumberTextField" text="3"/>
-    </HBox>
-    <ListView fx:id="currentOrdersListView" layoutX="14.0" layoutY="80.0" prefHeight="200.0" />
+        <Label layoutX="14.0" layoutY="51.0" text="Order Number" />
+        <TextField fx:id="orderNumberTextField" layoutX="101.0" layoutY="46.0" text="3" />
+    <ListView fx:id="currentOrdersListView" layoutX="14.0" layoutY="80.0" prefHeight="200.0" prefWidth="513.0" />
     <VBox layoutX="14.0" layoutY="290.0" spacing="10.0">
         <Label text="Subtotal $" />
         <TextField fx:id="subtotalTextField" />
@@ -23,6 +21,6 @@
         <Label text="Order Total $" />
         <TextField fx:id="orderTotalTextField" />
     </VBox>
-    <Button layoutX="300" layoutY="350.0" mnemonicParsing="false" onAction="#handleRemovePizza" text="Remove Pizza" />
-    <Button layoutX="300" layoutY="390.0" mnemonicParsing="false" onAction="#handlePlaceOrder" text="Place Order" />
+    <Button layoutX="278.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleRemovePizza" prefHeight="45.0" prefWidth="124.0" text="Remove Pizza" />
+    <Button layoutX="278.0" layoutY="389.0" mnemonicParsing="false" onAction="#handlePlaceOrder" prefHeight="45.0" prefWidth="124.0" text="Place Order" />
 </Pane>

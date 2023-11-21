@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class Deluxe extends Pizza{
 
-
-
     protected ArrayList<Topping> getDeluxeToppings() {
         ArrayList<Topping> deluxeToppings = new ArrayList<>();
         deluxeToppings.add(Topping.SAUSAGE);

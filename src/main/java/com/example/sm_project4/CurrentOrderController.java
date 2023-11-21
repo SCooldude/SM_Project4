@@ -1,4 +1,5 @@
 package com.example.sm_project4;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -8,6 +9,7 @@ public class CurrentOrderController {
     public TextField subtotalTextField;
     public TextField salesTaxTextField;
     public TextField orderTotalTextField;
+    public ComboBox orderNumberComboBox;
 
     public void handleRemovePizza() {
     }
