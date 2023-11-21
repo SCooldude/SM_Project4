@@ -2,7 +2,7 @@ package com.example.sm_project4;
 
 import java.util.ArrayList;
 
-public class Seafood extends Pizza{
+public class Seafood extends Pizza {
     protected ArrayList<Topping> getSeaFoodToppings() {
         ArrayList<Topping> SeaFoodToppings = new ArrayList<>();
         SeaFoodToppings.add(Topping.SHRIMP);
@@ -17,5 +17,4 @@ public class Seafood extends Pizza{
         }
 
     };
-}
 

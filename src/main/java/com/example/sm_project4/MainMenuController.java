@@ -7,7 +7,7 @@ public class MainMenuController {
 
     @FXML
     private void handleBuildYourOwn() {
-        mainApplication.openWindow("BuildYourOwnPizza.fxml", "Build Your Own Pizza");
+        mainApplication.openWindow("BuildYourOwnPizza.fxml", "Customize Your Pizza");
     }
 
     @FXML
@@ -17,7 +17,7 @@ public class MainMenuController {
 
     @FXML
     private void handleCurrentOrder() {
-        mainApplication.openWindow("CurrentOrder.fxml", "Current Order");
+        mainApplication.openWindow("CurrentOrder.fxml", "Order Detail");
     }
 
     @FXML

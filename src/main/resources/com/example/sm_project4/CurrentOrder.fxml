@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.sm_project4.CurrentOrderController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<Pane prefHeight="475.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sm_project4.CurrentOrderController">
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="14.0" text="Pizza Order">
+        <font>
+            <Font size="18.0" />
+        </font>
+    </Label>
+    <HBox layoutX="14.0" layoutY="44.0">
+        <Label text="Order Number" />
+        <TextField fx:id="orderNumberTextField" text="3"/>
+    </HBox>
+    <ListView fx:id="currentOrdersListView" layoutX="14.0" layoutY="80.0" prefHeight="200.0" />
+    <VBox layoutX="14.0" layoutY="290.0" spacing="10.0">
+        <Label text="Subtotal $" />
+        <TextField fx:id="subtotalTextField" />
+        <Label text="Sales Tax $" />
+        <TextField fx:id="salesTaxTextField" />
+        <Label text="Order Total $" />
+        <TextField fx:id="orderTotalTextField" />
+    </VBox>
+    <Button layoutX="300" layoutY="350.0" mnemonicParsing="false" onAction="#handleRemovePizza" text="Remove Pizza" />
+    <Button layoutX="300" layoutY="390.0" mnemonicParsing="false" onAction="#handlePlaceOrder" text="Place Order" />
+</Pane>

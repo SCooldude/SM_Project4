@@ -104,6 +104,26 @@ public class SpecialtyPizzasController {
 
 
     public void handleAddToOrder() {
+        OrderAddedPopup();
+        reset();
+    }
+
+    private void reset() {
+        pizzaDropdown.setValue("Deluxe");
+        RadioButton smallRadioButton = (RadioButton) size.getToggles().get(0);
+        smallRadioButton.setSelected(true);
+        extra_sauce.setSelected(false);
+        extra_cheese.setSelected(false);
+        updateToppingsList("Deluxe");
+        updatePizzaPrice();
+    }
+    private void OrderAddedPopup() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText("Order");
+        alert.setContentText("Pizza added to the order!");
+
+        alert.showAndWait();
     }
 }
 
