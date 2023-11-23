@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -16,13 +17,47 @@
     </top>
 
     <center>
-        <!-- Place the buttons in the center -->
         <VBox alignment="CENTER" spacing="10">
-            <Button mnemonicParsing="false" onAction="#handleBuildYourOwn" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;" text="Build Your Own Pizza" />
-            <Button mnemonicParsing="false" onAction="#handleOrderSpecialtyPizzas" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;" text="Order Specialty Pizzas" />
-            <Button mnemonicParsing="false" onAction="#handleCurrentOrder" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;" text="Current Order" />
-            <Button mnemonicParsing="false" onAction="#handleStoreOrders" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;" text="Store Orders" />
+            <Button mnemonicParsing="false" onAction="#handleBuildYourOwn" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
+                <graphic>
+                    <VBox alignment="CENTER">
+                        <ImageView fitHeight="80.0" fitWidth="124.0" preserveRatio="true">
+                            <Image url="@deluxe.jpeg" />
+                        </ImageView>
+                        <Text text="Build Your Own" />
+                    </VBox>
+                </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleOrderSpecialtyPizzas" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
+                <graphic>
+                    <VBox alignment="CENTER">
+                        <ImageView fitHeight="80.0" fitWidth="124.0" preserveRatio="true">
+                            <Image url="@supreme.jpeg" />
+                        </ImageView>
+                        <Text text="Order Specialty Pizzas" />
+                    </VBox>
+                </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleCurrentOrder" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
+                <graphic>
+                    <VBox alignment="CENTER">
+                        <ImageView fitHeight="80.0" fitWidth="124.0" preserveRatio="true">
+                            <Image url="@shoppingcart.jpeg" />
+                        </ImageView>
+                        <Text text="Current Order" />
+                    </VBox>
+                </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleStoreOrders" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
+                <graphic>
+                    <VBox alignment="CENTER">
+                        <ImageView fitHeight="80.0" fitWidth="124.0" preserveRatio="true">
+                            <Image url="@store.jpeg" />
+                        </ImageView>
+                        <Text text="Store Orders" />
+                    </VBox>
+                </graphic>
+            </Button>
         </VBox>
     </center>
 </BorderPane>
-
