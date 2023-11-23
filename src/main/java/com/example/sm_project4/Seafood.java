@@ -11,10 +11,19 @@ public class Seafood extends Pizza {
 
         return SeaFoodToppings;
     }
+
+    protected Sauce getSeaFoodSauce(){
+        return Sauce.ALFREDO;
+    }
     @Override
     public double price() {
             return 17.99;
         }
 
-    };
+    @Override
+    public String pizzaType() {
+        return "Seafood";
+    }
+
+};
 

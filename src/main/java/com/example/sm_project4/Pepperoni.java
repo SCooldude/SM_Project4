@@ -16,4 +16,9 @@ public class Pepperoni extends Pizza{
     public double price() {
         return 10.99;
     }
+
+    @Override
+    public String pizzaType() {
+        return "Pepperoni";
+    }
 }

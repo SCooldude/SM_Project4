@@ -11,5 +11,8 @@ public abstract class Pizza {
 
     public abstract double price(); //polymorphism
 
+    public abstract String pizzaType();
 
 }
+
+
