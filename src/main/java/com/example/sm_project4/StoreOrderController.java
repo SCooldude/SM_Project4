@@ -48,7 +48,7 @@ public class StoreOrderController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        orders = MainMenuController.getStoreOrders();
+        orders = mainController.getStoreOrders();
         if (orders.numberOfOrders() == 0) {
             noPizzaAlert();
             return;
@@ -78,7 +78,7 @@ public class StoreOrderController implements Initializable {
     @FXML
     void updateChoiceBox(ActionEvent event, int orderNumber) {
         soBox.getItems().removeAll(currentOrderNumbers);
-        currentOrderNumbers = MainMenuController.getStoreOrders().getOrderNumbers();
+        currentOrderNumbers = mainController.getStoreOrders().getOrderNumbers();
         soBox.getItems().addAll(currentOrderNumbers);
 
     }
@@ -140,14 +140,14 @@ public class StoreOrderController implements Initializable {
             nullAlert(event);
             return;
         }
-        ArrayList<Integer> ordersPlaced = MainMenuController.getReference().getOrdersPlaced();
+        ArrayList<Integer> ordersPlaced = mainController.getReference().getOrdersPlaced();
         if(!contains(ordersPlaced, soBox.getValue())){
             notPlacedAlert(event);
             return;
         }
 
         new MainMenuController();
-        orders = MainMenuController.getReference().getStoreOrders();
+        orders = mainController.getStoreOrders();
         int currentNumb = soBox.getValue();
         ArrayList<String> pizzaList = orders.find(currentNumb).getPizzas();
         if (pizzaList.isEmpty()) {
@@ -172,7 +172,7 @@ public class StoreOrderController implements Initializable {
     }
 
     private void removeOrderPlaced(int orderNumber){
-        ArrayList<Integer> ordersPlaced = MainMenuController.getReference().getOrdersPlaced();
+        ArrayList<Integer> ordersPlaced = mainController.getReference().getOrdersPlaced();
         for(int i =0; i<ordersPlaced.size(); i++){
             if(ordersPlaced.get(i) == orderNumber){
                 ordersPlaced.remove(i);
@@ -198,15 +198,12 @@ public class StoreOrderController implements Initializable {
 
 
     private boolean allOrdersPlaced(StoreOrders orders){
-        orders = MainMenuController.getReference().getStoreOrders();
-        ArrayList<Integer> ordersPlaced = MainMenuController.getReference().getOrdersPlaced();
-        currentOrderNumbers = MainMenuController.getReference().getStoreOrders().getOrderNumbers();
+        orders = mainController.getStoreOrders();
+        ArrayList<Integer> ordersPlaced = mainController.getReference().getOrdersPlaced();
+        currentOrderNumbers = mainController.getStoreOrders().getOrderNumbers();
 
         int index = currentOrderNumbers.get(currentOrderNumbers.size()-1);
-        if(orders.find(index).getPizzas().isEmpty()){
-            return true;
-        }
-        return false;
+        return orders.find(index).getPizzas().isEmpty();
 
     }
     @FXML

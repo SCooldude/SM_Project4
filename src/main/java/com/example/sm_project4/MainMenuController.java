@@ -87,11 +87,11 @@ public class MainMenuController {
         storeOrdersController.setMainController(this);
     }
 
-    public static StoreOrders getStoreOrders() {
+    public StoreOrders getStoreOrders() {
         return orders;
     }
 
-    public static MainMenuController getReference(){
+    public MainMenuController getReference(){
         return this;
     }
 

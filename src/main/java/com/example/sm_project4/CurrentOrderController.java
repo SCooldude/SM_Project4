@@ -23,7 +23,6 @@ public class CurrentOrderController {
     private TextField salesTaxTextField;
     @FXML
     private TextField orderTotalTextField;
-    private Order currentOrder;
 
     public void setMainController(MainMenuController controller) {
         mainController = controller;
@@ -33,13 +32,13 @@ public class CurrentOrderController {
     }
     @FXML
     void setOrderNumber() {
-        String currentOrderNum = String.valueOf(MainMenuController.getStoreOrders().getAvailable_OrderNumber());
+        String currentOrderNum = String.valueOf(mainController.getStoreOrders().getAvailable_OrderNumber());
         orderNumberTextField.setText(currentOrderNum);
     }
     @FXML
     void setPizzas() {
-        int currentOrderNum = MainMenuController.getStoreOrders().getAvailable_OrderNumber();
-        StoreOrders orders = MainMenuController.getStoreOrders();
+        int currentOrderNum = mainController.getStoreOrders().getAvailable_OrderNumber();
+        StoreOrders orders = mainController.getStoreOrders();
         Order currentOrder = orders.find(currentOrderNum);
         ArrayList<String> pizzas = currentOrder.getPizzas();
 
@@ -49,8 +48,8 @@ public class CurrentOrderController {
     }
     @FXML
     void setPrices() {
-        int currentOrderNum = MainMenuController.getStoreOrders().getAvailable_OrderNumber();
-        StoreOrders orders = MainMenuController.getStoreOrders();
+        int currentOrderNum = mainController.getStoreOrders().getAvailable_OrderNumber();
+        StoreOrders orders = mainController.getStoreOrders();
         Order currentOrder = orders.find(currentOrderNum);
 
         double subtotalDouble = currentOrder.total();
