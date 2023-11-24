@@ -8,6 +8,10 @@
 
 <Pane prefHeight="543.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sm_project4.BuildYourOwnPizzaController">
 
+    <Button mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" BorderPane.alignment="CENTER">
+        <BorderPane.margin>
+        </BorderPane.margin></Button>
+
     <Label layoutX="340.0" layoutY="14.0" text="Pizza Size" />
     <ComboBox fx:id="sizeDropdown" layoutX="340.0" layoutY="47.0">
         <items>
@@ -33,7 +37,7 @@
         <CheckBox  fx:id="extraCheeseCheckbox" text="extra cheese" />
     </VBox>
 
-    <ImageView fx:id="pizzaImage" fitHeight="200" fitWidth="200" layoutX="10" layoutY="10" />
+    <ImageView fx:id="pizzaImage" fitHeight="200" fitWidth="200" layoutX="10" layoutY="30" />
 
     <Label layoutX="20" layoutY="270" text="Additional Toppings" />
 

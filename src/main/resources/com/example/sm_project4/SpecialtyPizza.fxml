@@ -8,6 +8,10 @@
 
 <Pane prefHeight="475.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sm_project4.SpecialtyPizzasController">
 
+    <Button mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" BorderPane.alignment="CENTER">
+        <BorderPane.margin>
+        </BorderPane.margin></Button>
+
     <ComboBox fx:id="pizzaDropdown" layoutX="300.0" layoutY="10" onAction="#handlePizzaSelection" promptText="Select Pizza">
         <items>
             <FXCollections fx:factory="observableArrayList">
@@ -29,7 +33,7 @@
         <RadioButton text="Large" toggleGroup="$size" />
     </VBox>
 
-    <ImageView fx:id="pizzaImage" fitHeight="200" fitWidth="200" layoutX="10" layoutY="10" />
+    <ImageView fx:id="pizzaImage" fitHeight="200" fitWidth="200" layoutX="10" layoutY="30" />
 
     <Label layoutX="10" layoutY="230" text="Toppings" />
 
