@@ -61,10 +61,8 @@ public class CurrentOrderController {
         StoreOrders orders = mainController.getStoreOrders();
         Order currentOrder = orders.find(currentOrderNum);
         ArrayList<String> pizzas = currentOrder.getPizzas();
-
         ObservableList<String> pizzaString = FXCollections.observableArrayList(pizzas);
         currentOrdersListView.setItems(pizzaString);
-        System.out.println(pizzaString);
     }
     @FXML
     void setPrices() {

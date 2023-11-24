@@ -26,9 +26,8 @@ public class BuildYourOwn extends Pizza{
         }
         return total;
     }
-    @Override
     public String toString() {
-        return "your momma";
+        return "[" + pizzaType() + "] " + super.toString();
     }
 
     @Override
@@ -37,7 +36,7 @@ public class BuildYourOwn extends Pizza{
     }
 
     public BuildYourOwn() {
-        this.toppings = new ArrayList<>();
+        this.toppings = new ArrayList<String>();
         this.size = Size.Small;
     }
 }

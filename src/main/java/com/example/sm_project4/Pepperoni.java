@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Pepperoni extends Pizza{
 
     public Pepperoni() {
-        ArrayList<Topping> toppings = new ArrayList<>();
-        toppings.add(Topping.PEPPERONI);
+        ArrayList<String> toppings = new ArrayList<>();
+        toppings.add(String.valueOf(Topping.PEPPERONI));
         this.toppings = toppings;
         this.sauce = Sauce.TOMATO;
         this.size = Size.Small;

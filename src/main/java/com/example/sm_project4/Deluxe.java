@@ -6,12 +6,12 @@ public class Deluxe extends Pizza{
 
 
     public Deluxe() {
-        ArrayList<Topping> toppings = new ArrayList<>();
-        toppings.add(Topping.SAUSAGE);
-        toppings.add(Topping.PEPPERONI);
-        toppings.add(Topping.GREEN_PEPPER);
-        toppings.add(Topping.ONION);
-        toppings.add(Topping.MUSHROOM);
+        ArrayList<String> toppings = new ArrayList<>();
+        toppings.add(String.valueOf(Topping.SAUSAGE));
+        toppings.add(String.valueOf(Topping.PEPPERONI));
+        toppings.add(String.valueOf(Topping.GREEN_PEPPER));
+        toppings.add(String.valueOf(Topping.ONION));
+        toppings.add(String.valueOf(Topping.MUSHROOM));
         this.toppings = toppings;
         this.sauce = Sauce.TOMATO;
         this.size = Size.Small; //default is small

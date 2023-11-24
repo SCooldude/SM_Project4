@@ -2,7 +2,7 @@ package com.example.sm_project4;
 import java.util.ArrayList;
 
 public abstract class Pizza {
-    protected ArrayList<Topping> toppings;
+    protected ArrayList<String> toppings;
     protected Size size;
     protected Sauce sauce;
     protected boolean extraSauce;

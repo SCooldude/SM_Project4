@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class Meatzza extends Pizza{
 
     public Meatzza() {
-        ArrayList<Topping> toppings = new ArrayList<>();
-        toppings.add(Topping.SAUSAGE);
-        toppings.add(Topping.BEEF);
-        toppings.add(Topping.HAM);
-        toppings.add(Topping.PEPPERONI);
+        ArrayList<String> toppings = new ArrayList<>();
+        toppings.add(String.valueOf(Topping.SAUSAGE));
+        toppings.add(String.valueOf(Topping.BEEF));
+        toppings.add(String.valueOf(Topping.HAM));
+        toppings.add(String.valueOf(Topping.PEPPERONI));
         this.toppings = toppings;
         this.sauce = Sauce.TOMATO;
         this.size = Size.Small;

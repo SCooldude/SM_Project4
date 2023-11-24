@@ -8,7 +8,8 @@ public class PizzaMaker {
             case "Pepperoni" -> new Pepperoni();
             case "Seafood" -> new Seafood();
             case "Supreme" -> new Supreme();
-            default -> new BuildYourOwn();
+            case "Build Your Own" -> new BuildYourOwn();
+            default -> throw new IllegalStateException("Unexpected value: " + pizzaType);
         };
     }
 }

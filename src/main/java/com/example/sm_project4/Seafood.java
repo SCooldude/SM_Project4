@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Seafood extends Pizza{
 
     public Seafood() {
-        ArrayList<Topping> toppings = new ArrayList<>();
-        toppings.add(Topping.SQUID);
-        toppings.add(Topping.SHRIMP);
-        toppings.add(Topping.CRAB_MEAT);
+        ArrayList<String> toppings = new ArrayList<>();
+        toppings.add(String.valueOf(Topping.SQUID));
+        toppings.add(String.valueOf(Topping.SHRIMP));
+        toppings.add(String.valueOf(Topping.CRAB_MEAT));
         this.toppings = toppings;
         this.sauce = Sauce.ALFREDO;
         this.size = Size.Small;

@@ -37,6 +37,8 @@ public class BuildYourOwnPizzaController {
     @FXML
     private CheckBox extraCheeseCheckbox;
 
+    private Pizza pizza;
+
     public void setMainController(MainMenuController controller) {
         mainMenuController = controller;
     }
@@ -140,6 +142,20 @@ public class BuildYourOwnPizzaController {
     }
 
     public void handlePlaceOrder() {
+
+        pizza = PizzaMaker.createPizza("Build Your Own");
+
+        pizza.size = Size.valueOf(sizeDropdown.getValue());
+        pizza.extraCheese = extraCheeseCheckbox.isSelected();
+        pizza.extraSauce = extraSauceCheckbox.isSelected();
+
+        pizza.toppings.addAll(selectedToppingsListView.getItems());
+
+        StoreOrders orders = mainMenuController.getStoreOrders();
+        int currentOrderNumber = orders.getAvailable_OrderNumber();
+
+        Order currentOrder = orders.find(currentOrderNumber);
+        currentOrder.addPizza(pizza);
         OrderAddedPopup();
         reset();
     }
