@@ -7,16 +7,23 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class SpecialtyPizzasController {
-
     private MainMenuController mainMenuController;
 
-    public ToggleGroup size;
-    public CheckBox extra_sauce;
-    public CheckBox extra_cheese;
-    public TextField Amount;
+    @FXML
+    private ToggleGroup size;
+
+    @FXML
+    private CheckBox extra_sauce;
+
+    @FXML
+    private CheckBox extra_cheese;
+
+    @FXML
+    private TextField Amount;
 
     @FXML
     private ListView<Object> toppingsListView;
@@ -26,6 +33,8 @@ public class SpecialtyPizzasController {
 
     @FXML
     private ImageView pizzaImage;
+
+    private Pizza pizza;
 
     public void setMainController(MainMenuController controller) {
         mainMenuController = controller;
@@ -46,9 +55,9 @@ public class SpecialtyPizzasController {
             }
         });
         extra_sauce.selectedProperty().addListener((sauce) -> updatePizzaPrice());
-
         extra_cheese.selectedProperty().addListener((cheese) -> updatePizzaPrice());
     }
+
     @FXML
     private void handlePizzaSelection() {
         String selectedPizza = pizzaDropdown.getValue();
@@ -57,7 +66,6 @@ public class SpecialtyPizzasController {
         pizzaImage.setImage(image);
 
         updateToppingsList(selectedPizza);
-
     }
 
     private void updateToppingsList(String selectedPizza) {
@@ -72,7 +80,6 @@ public class SpecialtyPizzasController {
         }
         toppingsListView.setItems(toppingsList);
         updatePizzaPrice();
-
     }
 
     private void updatePizzaPrice() {
@@ -109,21 +116,22 @@ public class SpecialtyPizzasController {
         }
     }
 
+    @FXML
     public void handleAddToOrder() {
-        String selectedPizza = pizzaDropdown.getValue();
-
-        Pizza pizza = PizzaMaker.createPizza(selectedPizza);
-
         pizza.sauce = Sauce.TOMATO;
         pizza.size = Size.valueOf(((RadioButton) size.getSelectedToggle()).getText());
         pizza.extraCheese = extra_cheese.isSelected();
         pizza.extraSauce = extra_sauce.isSelected();
-        String pizzer = pizza.toString();
 
-        Order currentOrder;
-        currentOrder = new Order();
+        StoreOrders orders = mainMenuController.getStoreOrders();
+        int currentOrderNumber = orders.getAvailable_OrderNumber();
+
+        Order currentOrder = orders.find(currentOrderNumber);
         currentOrder.addPizza(pizza);
-        OrderAddedPopup();
+        ArrayList<String> pizzas = currentOrder.getPizzas();
+        System.out.println(pizzas);
+
+        orderAddedPopup();
         reset();
     }
 
@@ -136,7 +144,8 @@ public class SpecialtyPizzasController {
         updateToppingsList("Deluxe");
         updatePizzaPrice();
     }
-    private void OrderAddedPopup() {
+
+    private void orderAddedPopup() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText("Order");
@@ -145,4 +154,3 @@ public class SpecialtyPizzasController {
         alert.showAndWait();
     }
 }
-

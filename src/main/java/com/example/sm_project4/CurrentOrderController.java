@@ -1,12 +1,18 @@
 package com.example.sm_project4;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
 public class CurrentOrderController {
 
-    private MainMenuController mainMenuController;
+    private MainMenuController mainController;
+
     @FXML
     private TextField orderNumberTextField;
     @FXML
@@ -20,53 +26,46 @@ public class CurrentOrderController {
     private Order currentOrder;
 
     public void setMainController(MainMenuController controller) {
-        mainMenuController = controller;
+        mainController = controller;
+        setOrderNumber();
+        setPizzas();
+        setPrices();
     }
-
     @FXML
-    private void initialize() {
-        System.out.println("Updating Order ListView");
-        this.currentOrder = new Order();
-        updateOrderListView();
+    void setOrderNumber() {
+        String currentOrderNum = String.valueOf(MainMenuController.getStoreOrders().getAvailable_OrderNumber());
+        orderNumberTextField.setText(currentOrderNum);
     }
-
-    private void updateOrderListView() {
-
-        orderNumberTextField.setText(String.valueOf(currentOrder.getOrderNumber()));
-
-            for (Pizza pizza : currentOrder.getPizzas()) {
-                currentOrdersListView.getItems().add(String.valueOf(pizza));
-            }
-
-            double subtotal = calculateSubtotal();
-            subtotalTextField.setText(String.format("%.2f", subtotal));
-
-            double salesTax = calculateSalesTax(subtotal);
-            salesTaxTextField.setText(String.format("%.2f", salesTax));
-
-            double orderTotal = subtotal + salesTax;
-            orderTotalTextField.setText(String.format("%.2f", orderTotal));
-        }
-
-    private double calculateSubtotal() {
-        double subtotal = 0.0;
-        for (Pizza pizza : currentOrder.getPizzas()) {
-            subtotal += pizza.getPrice_ofPizza();
-        }
-        return subtotal;
-    }
-
-    private double calculateSalesTax(double subtotal) {
-        return subtotal * 0.06625;
-    }
-
     @FXML
-    private void handleRemovePizza() {
-    }
+    void setPizzas() {
+        int currentOrderNum = MainMenuController.getStoreOrders().getAvailable_OrderNumber();
+        StoreOrders orders = MainMenuController.getStoreOrders();
+        Order currentOrder = orders.find(currentOrderNum);
+        ArrayList<String> pizzas = currentOrder.getPizzas();
 
+        ObservableList<String> pizzaString = FXCollections.observableArrayList(pizzas);
+        currentOrdersListView.setItems(pizzaString);
+        System.out.println(pizzaString);
+    }
     @FXML
-    private void handlePlaceOrder() {
+    void setPrices() {
+        int currentOrderNum = MainMenuController.getStoreOrders().getAvailable_OrderNumber();
+        StoreOrders orders = MainMenuController.getStoreOrders();
+        Order currentOrder = orders.find(currentOrderNum);
 
+        double subtotalDouble = currentOrder.total();
+        String subtotalString = new DecimalFormat("#,##0.00").format(subtotalDouble);
+        subtotalTextField.setText(String.valueOf(subtotalString));
+        double taxDouble = subtotalDouble * 0.06625;
+        String taxString = new DecimalFormat("#,##0.00").format(taxDouble);
+        salesTaxTextField.setText(taxString);
+        double totalDouble = subtotalDouble + taxDouble;
+        String totalString = new DecimalFormat("#,##0.00").format(totalDouble);
+        orderTotalTextField.setText(String.valueOf(totalString));
     }
+
 }
+
+
+
 
