@@ -13,6 +13,11 @@ public abstract class Pizza {
 
     public abstract String pizzaType();
 
+    public String getPizzaDetails() {
+        return String.format("%s - Size: %s, Sauce: %s, Extra Sauce: %s, Extra Cheese: %s, Price: $%.2f",
+                pizzaType(), size, sauce, extraSauce, extraCheese, price());
+    }
+
 }
 
 

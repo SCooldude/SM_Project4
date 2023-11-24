@@ -14,7 +14,6 @@ public class MainMenuController {
     private void handleOrderSpecialtyPizzas() {
         mainApplication.openWindow("SpecialtyPizza.fxml", "Specialty Pizzas");
     }
-
     @FXML
     private void handleCurrentOrder() {
         mainApplication.openWindow("CurrentOrder.fxml", "Order Detail");

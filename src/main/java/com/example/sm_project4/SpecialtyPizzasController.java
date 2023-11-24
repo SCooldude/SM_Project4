@@ -24,6 +24,12 @@ public class SpecialtyPizzasController {
     @FXML
     private ImageView pizzaImage;
 
+    private final Order currentOrder;
+
+    public SpecialtyPizzasController(Order currentOrder) {
+        this.currentOrder = currentOrder;
+    }
+
     public void initialize() {
         pizzaDropdown.setValue("Deluxe");
         String deluxeImagePath = "/com/example/sm_project4/deluxe.jpeg";
@@ -33,7 +39,7 @@ public class SpecialtyPizzasController {
         smallRadioButton.setSelected(true);
         updateToppingsList("Deluxe");
 
-        size.selectedToggleProperty().addListener((observable,oldValue,newValue) -> {
+        size.selectedToggleProperty().addListener((newValue) -> {
             if (newValue != null) {
                 updatePizzaPrice();
             }
@@ -104,6 +110,17 @@ public class SpecialtyPizzasController {
 
 
     public void handleAddToOrder() {
+        String selectedPizza = pizzaDropdown.getValue();
+
+        Pizza pizza = PizzaMaker.createPizza(selectedPizza);
+
+        pizza.sauce = Sauce.TOMATO;
+        pizza.size = Size.valueOf(((RadioButton) size.getSelectedToggle()).getText());
+        pizza.extraCheese = extra_cheese.isSelected();
+        pizza.extraSauce = extra_sauce.isSelected();
+
+
+        currentOrder.addPizza(pizza);
         OrderAddedPopup();
         reset();
     }

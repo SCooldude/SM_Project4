@@ -13,23 +13,18 @@ public class Deluxe extends Pizza{
         deluxeToppings.add(Topping.MUSHROOM);
         return deluxeToppings;
     }
-
     protected Sauce getDeluxeSauce(){
         return Sauce.TOMATO;
     }
-
 
         @Override
     public double price() {
 
         return 14.99;
     }
-
     @Override
     public String pizzaType() {
         return "Deluxe";
     }
-
-
 
 }
