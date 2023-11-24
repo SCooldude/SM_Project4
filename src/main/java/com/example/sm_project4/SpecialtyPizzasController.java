@@ -140,6 +140,8 @@ public class SpecialtyPizzasController {
 
     @FXML
     public void handleAddToOrder() {
+
+        pizza = PizzaMaker.createPizza(pizzaDropdown.getValue());
         pizza.sauce = Sauce.TOMATO;
         pizza.size = Size.valueOf(((RadioButton) size.getSelectedToggle()).getText());
         pizza.extraCheese = extra_cheese.isSelected();
