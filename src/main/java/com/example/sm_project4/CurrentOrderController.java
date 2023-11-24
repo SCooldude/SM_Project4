@@ -5,6 +5,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 public class CurrentOrderController {
+
+    private MainMenuController mainMenuController;
     @FXML
     private TextField orderNumberTextField;
     @FXML
@@ -15,11 +17,10 @@ public class CurrentOrderController {
     private TextField salesTaxTextField;
     @FXML
     private TextField orderTotalTextField;
-
     private Order currentOrder;
 
-    public CurrentOrderController() {
-        // You can leave this constructor empty or add any necessary initialization
+    public void setMainController(MainMenuController controller) {
+        mainMenuController = controller;
     }
 
     @FXML

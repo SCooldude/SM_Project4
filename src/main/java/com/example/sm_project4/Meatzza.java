@@ -3,48 +3,41 @@ package com.example.sm_project4;
 import java.util.ArrayList;
 
 public class Meatzza extends Pizza{
-    protected ArrayList<Topping> getMeatzzaToppings() {
-        ArrayList<Topping> MeatzzaToppings = new ArrayList<>();
-        MeatzzaToppings.add(Topping.SAUSAGE);
-        MeatzzaToppings.add(Topping.PEPPERONI);
-        MeatzzaToppings.add(Topping.HAM);
-        MeatzzaToppings.add(Topping.BEEF);
 
-        return  MeatzzaToppings;
+    public Meatzza() {
+        ArrayList<Topping> toppings = new ArrayList<>();
+        toppings.add(Topping.SAUSAGE);
+        toppings.add(Topping.BEEF);
+        toppings.add(Topping.HAM);
+        toppings.add(Topping.PEPPERONI);
+        this.toppings = toppings;
+        this.sauce = Sauce.TOMATO;
+        this.size = Size.Small;
     }
-    protected Sauce getMeatzzaSauce(){
-        return Sauce.TOMATO;
-    }
-
-
-
-
     @Override
     public double price() {
-        return 16.99;
+        double total = 16.99;
+        if (this.extraCheese) {
+            total += 1.0;
+        }
+        if (this.extraSauce) {
+            total += 1.0;
+        }
+        if (this.size == Size.Medium) {
+            total += 2.0;
+        }
+        if (this.size == Size.Large) {
+            total += 4.0;
+        }
+        return total;
     }
-
     @Override
     public String pizzaType() {
         return "Meatzza";
     }
-
     @Override
-    public String getToppings() {
-        StringBuilder toppingsString = new StringBuilder(" ");
+    public String toString() {
+        return "[" + pizzaType() + "] " + super.toString();
 
-        // Get the deluxe toppings
-        ArrayList<Topping> DeluxeToppings = getMeatzzaToppings();
-
-        // Append each topping to the string
-        for (Topping topping : DeluxeToppings) {
-            toppingsString.append(topping).append(", ");
-        }
-
-        // Remove the trailing comma and space
-        toppingsString.setLength(toppingsString.length() - 2);
-
-        // Return the final toppings string
-        return toppingsString.toString();
     }
 }

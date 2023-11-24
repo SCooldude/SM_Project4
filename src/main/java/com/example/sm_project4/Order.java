@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-
     private final int orderNumber;
     private final List<Pizza> pizzas;
 
@@ -26,7 +25,7 @@ public class Order {
         return pizzas;
     }
     public double total() {
-        double total = 0.0;
+        double total = 0;
         for (Pizza pizza : this.pizzas) {
             total += pizza.price();
         }

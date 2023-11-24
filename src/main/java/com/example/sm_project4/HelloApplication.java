@@ -16,26 +16,10 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 450, 550);
         MainMenuController mainMenuController = fxmlLoader.getController();
         mainMenuController.setMainApplication(this);
-
         stage.setTitle("Main-Menu");
         stage.setScene(scene);
         stage.show();
     }
-
-    public void openWindow(String fxmlFileName, String title) {
-        try {
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(fxmlFileName));
-            Scene scene = new Scene(loader.load(), 400, 300);
-
-            Stage newStage = new Stage();
-            newStage.setTitle(title);
-            newStage.setScene(scene);
-            newStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void main(String[] args) {
         launch();
     }

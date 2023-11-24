@@ -4,6 +4,10 @@ public enum  Topping {
 
     SAUSAGE, PEPPERONI, HAM, GREEN_PEPPER, ONION, BLACK_OLIVE, MUSHROOM, BEEF, SHRIMP, SQUID, CRAB_MEAT;
 
+    public Topping[] getList(){
+        return new Topping[]{SAUSAGE, PEPPERONI, GREEN_PEPPER, ONION, MUSHROOM, BLACK_OLIVE,
+                BEEF, HAM, SHRIMP, SQUID, CRAB_MEAT};
+    }
 
     private String toppingCode;
 

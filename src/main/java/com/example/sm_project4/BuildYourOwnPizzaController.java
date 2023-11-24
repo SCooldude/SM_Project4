@@ -8,6 +8,9 @@ import javafx.scene.image.ImageView;
 import java.util.Objects;
 
 public class BuildYourOwnPizzaController {
+
+    private MainMenuController mainMenuController;
+
     public TextField amountTextField;
     public ImageView pizzaImage;
     public ToggleGroup two_sauce;
@@ -26,6 +29,11 @@ public class BuildYourOwnPizzaController {
 
     @FXML
     private CheckBox extraCheeseCheckbox;
+
+    public void setMainController(MainMenuController controller) {
+        mainMenuController = controller;
+    }
+
     public void initialize() {
         sizeDropdown.setValue("Small");
         String deluxeImagePath = "/com/example/sm_project4/deluxe.jpeg";

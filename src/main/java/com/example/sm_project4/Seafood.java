@@ -2,47 +2,41 @@ package com.example.sm_project4;
 
 import java.util.ArrayList;
 
-public class Seafood extends Pizza {
-    protected ArrayList<Topping> getSeaFoodToppings() {
-        ArrayList<Topping> SeaFoodToppings = new ArrayList<>();
-        SeaFoodToppings.add(Topping.SHRIMP);
-        SeaFoodToppings.add(Topping.SQUID);
-        SeaFoodToppings.add(Topping.CRAB_MEAT);
+public class Seafood extends Pizza{
 
-        return SeaFoodToppings;
-    }
-
-    protected Sauce getSeaFoodSauce(){
-        return Sauce.ALFREDO;
+    public Seafood() {
+        ArrayList<Topping> toppings = new ArrayList<>();
+        toppings.add(Topping.SQUID);
+        toppings.add(Topping.SHRIMP);
+        toppings.add(Topping.CRAB_MEAT);
+        this.toppings = toppings;
+        this.sauce = Sauce.ALFREDO;
+        this.size = Size.Small;
     }
     @Override
     public double price() {
-            return 17.99;
+        double total = 17.99;
+        if (this.extraCheese) {
+            total += 1.0;
         }
-
+        if (this.extraSauce) {
+            total += 1.0;
+        }
+        if (this.size == Size.Medium) {
+            total += 2.0;
+        }
+        if (this.size == Size.Large) {
+            total += 4.0;
+        }
+        return total;
+    }
     @Override
     public String pizzaType() {
         return "Seafood";
     }
-
     @Override
-    public String getToppings() {
-        StringBuilder toppingsString = new StringBuilder(" ");
+    public String toString() {
+        return "[" + pizzaType() + "] " + super.toString();
 
-        // Get the deluxe toppings
-        ArrayList<Topping> DeluxeToppings = getSeaFoodToppings();
-
-        // Append each topping to the string
-        for (Topping topping : DeluxeToppings) {
-            toppingsString.append(topping).append(", ");
-        }
-
-        // Remove the trailing comma and space
-        toppingsString.setLength(toppingsString.length() - 2);
-
-        // Return the final toppings string
-        return toppingsString.toString();
     }
-
-};
-
+}

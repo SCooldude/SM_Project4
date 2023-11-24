@@ -10,6 +10,9 @@ import javafx.scene.image.ImageView;
 import java.util.Objects;
 
 public class SpecialtyPizzasController {
+
+    private MainMenuController mainMenuController;
+
     public ToggleGroup size;
     public CheckBox extra_sauce;
     public CheckBox extra_cheese;
@@ -23,7 +26,10 @@ public class SpecialtyPizzasController {
 
     @FXML
     private ImageView pizzaImage;
-    
+
+    public void setMainController(MainMenuController controller) {
+        mainMenuController = controller;
+    }
 
     public void initialize() {
         pizzaDropdown.setValue("Deluxe");
