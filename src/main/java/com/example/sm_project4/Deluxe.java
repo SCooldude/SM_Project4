@@ -26,5 +26,23 @@ public class Deluxe extends Pizza{
     public String pizzaType() {
         return "Deluxe";
     }
+    @Override
+    public String getToppings() {
+        StringBuilder toppingsString = new StringBuilder(" ");
+
+        // Get the deluxe toppings
+        ArrayList<Topping> DeluxeToppings = getDeluxeToppings();
+
+        // Append each topping to the string
+        for (Topping topping : DeluxeToppings) {
+            toppingsString.append(topping).append(", ");
+        }
+
+        // Remove the trailing comma and space
+        toppingsString.setLength(toppingsString.length() - 2);
+
+        // Return the final toppings string
+        return toppingsString.toString();
+    }
 
 }

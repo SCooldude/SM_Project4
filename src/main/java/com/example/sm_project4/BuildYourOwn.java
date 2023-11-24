@@ -11,4 +11,9 @@ public class BuildYourOwn extends Pizza{
     public String pizzaType() {
         return "BuildYourOwn";
     }
+
+    @Override
+    public String getToppings() {
+        return null;
+    }
 }
