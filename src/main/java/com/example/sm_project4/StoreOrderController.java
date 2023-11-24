@@ -28,8 +28,6 @@ public class StoreOrderController implements Initializable {
     private TextField totalText;
     @FXML
     private ChoiceBox<Integer> soBox;
-    @FXML
-    private Button cancelButton, exportButton;
 
     private MainMenuController mainController = new MainMenuController().getReference();
     private StoreOrders orders;
@@ -67,13 +65,8 @@ public class StoreOrderController implements Initializable {
         }
         currentOrderNumbers = orders.getOrderNumbers();
         soBox.getItems().addAll(currentOrderNumbers);
-        // int currentNum = currentOrderNumbers.get(0);
-        // soBox.setValue(currentNum);
-        //setPrice();
 
         soBox.setOnAction(this::displayPizzas);
-        // orderList.getItems().addAll(pizzaString);
-
 
     }
 
@@ -192,23 +185,6 @@ public class StoreOrderController implements Initializable {
             }
         }
     }
-
-    //For testing will delete later
-    private void printPlacedCurrent(ArrayList<Integer> placed, ArrayList<Integer> current){
-        System.out.println("Beginning Placed List");
-        for (Integer value : placed) {
-            System.out.println(value);
-        }
-        System.out.println("End Placed List");
-        System.out.println("Beginning Current List");
-        for (Integer integer : current) {
-            System.out.println(integer);
-        }
-        System.out.println("End Current List");
-    }
-
-
-
     private boolean allOrdersPlaced(StoreOrders orders){
         orders = mainController.getStoreOrders();
         ArrayList<Integer> ordersPlaced = mainController.getReference().getOrdersPlaced();
@@ -248,7 +224,7 @@ public class StoreOrderController implements Initializable {
         Stage stage = (Stage) node.getScene().getWindow();
 
         if(!allOrdersPlaced(orders)){
-            orderNotPlacedExportAlert(event); //check if we have a order that has pizzas but not been officially "placed"
+            orderNotPlacedExportAlert(event);
             return;
         }
 

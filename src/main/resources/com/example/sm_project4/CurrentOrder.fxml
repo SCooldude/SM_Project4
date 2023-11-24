@@ -5,6 +5,10 @@
 <?import javafx.scene.text.*?>
 
 <Pane prefHeight="475.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sm_project4.CurrentOrderController">
+    <Button mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" BorderPane.alignment="CENTER">
+        <BorderPane.margin>
+        </BorderPane.margin></Button>
+
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="14.0" text="Pizza Order">
         <font>
             <Font size="18.0" />
