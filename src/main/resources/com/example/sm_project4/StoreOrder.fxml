@@ -4,7 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane prefHeight="475.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sm_project4.CurrentOrderController">
+<Pane prefHeight="475.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sm_project4.StoreOrderController">
+    <Button mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" BorderPane.alignment="CENTER">
+        <BorderPane.margin>
+        </BorderPane.margin></Button>
+
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="14.0" prefHeight="33.0" prefWidth="99.0" text="Store Orders">
         <font>
             <Font name="System Bold" size="18.0" />
@@ -17,8 +21,8 @@
 
     <ListView fx:id="currentOrdersListView" layoutX="14.0" layoutY="123.0" prefHeight="217.0" prefWidth="516.0" />
 
-    <Button layoutX="81.0" layoutY="377.0" mnemonicParsing="false" onAction="#handleRemovePizza" prefHeight="56.0" prefWidth="144.0" text="Cancel Order" />
-    <Button layoutX="268.0" layoutY="377.0" mnemonicParsing="false" onAction="#handlePlaceOrder" prefHeight="56.0" prefWidth="144.0" text="Export Store Orders" />
+    <Button layoutX="81.0" layoutY="377.0" mnemonicParsing="false" onAction="#cancelOrder" prefHeight="56.0" prefWidth="144.0" text="Cancel Order" />
+    <Button layoutX="268.0" layoutY="377.0" mnemonicParsing="false" onAction="#exportToFile" prefHeight="56.0" prefWidth="144.0" text="Export Store Orders" />
      <ComboBox fx:id="orderNumberComboBox" layoutX="24.0" layoutY="87.0" promptText="Select Order">
         </ComboBox>
 </Pane>

@@ -17,6 +17,7 @@ import java.lang.reflect.Array;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class StoreOrderController implements Initializable {
@@ -44,6 +45,17 @@ public class StoreOrderController implements Initializable {
         alert.setTitle("No Pizza");
         alert.setContentText("No Pizza Orders Placed");
         alert.showAndWait();
+    }
+
+    @FXML
+    private void onBackButtonClick(ActionEvent event) throws IOException {
+        Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
+        Scene mainMenuScene = new Scene(mainMenuRoot);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("RU Pizza");
+        stage.setScene(mainMenuScene);
+        stage.show();
     }
 
     @Override
