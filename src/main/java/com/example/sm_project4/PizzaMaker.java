@@ -8,7 +8,7 @@ public class PizzaMaker {
             case "Pepperoni" -> new Pepperoni();
             case "Seafood" -> new Seafood();
             case "Supreme" -> new Supreme();
-            default -> null;
+            default -> new BuildYourOwn();
         };
     }
 }

@@ -18,22 +18,25 @@ public class CurrentOrderController {
 
     private Order currentOrder;
 
-    public void setCurrentOrder(Order currentOrder) {
-        this.currentOrder = currentOrder;
+    public CurrentOrderController() {
+        // You can leave this constructor empty or add any necessary initialization
+    }
+
+    @FXML
+    private void initialize() {
+        System.out.println("Updating Order ListView");
+        this.currentOrder = new Order();
         updateOrderListView();
     }
 
     private void updateOrderListView() {
-        currentOrdersListView.getItems().clear();
 
-        if (currentOrder != null) {
-            orderNumberTextField.setText(String.valueOf(currentOrder.getOrderNumber()));
+        orderNumberTextField.setText(String.valueOf(currentOrder.getOrderNumber()));
 
             for (Pizza pizza : currentOrder.getPizzas()) {
-                currentOrdersListView.getItems().add(pizza.getPizzaDetails());
+                currentOrdersListView.getItems().add(String.valueOf(pizza));
             }
 
-            // Calculate and display other order details (subtotal, sales tax, order total)
             double subtotal = calculateSubtotal();
             subtotalTextField.setText(String.format("%.2f", subtotal));
 
@@ -42,18 +45,12 @@ public class CurrentOrderController {
 
             double orderTotal = subtotal + salesTax;
             orderTotalTextField.setText(String.format("%.2f", orderTotal));
-        } else {
-            orderNumberTextField.clear();
-            subtotalTextField.clear();
-            salesTaxTextField.clear();
-            orderTotalTextField.clear();
         }
-    }
 
     private double calculateSubtotal() {
         double subtotal = 0.0;
         for (Pizza pizza : currentOrder.getPizzas()) {
-            subtotal += pizza.price();
+            subtotal += pizza.getPrice_ofPizza();
         }
         return subtotal;
     }
@@ -62,12 +59,13 @@ public class CurrentOrderController {
         return subtotal * 0.06625;
     }
 
-
     @FXML
     private void handleRemovePizza() {
     }
 
     @FXML
     private void handlePlaceOrder() {
+
     }
 }
+

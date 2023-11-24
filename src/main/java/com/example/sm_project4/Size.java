@@ -1,9 +1,9 @@
 package com.example.sm_project4;
 
 public enum Size {
-    SMALL("Small"),
-    MEDIUM("Medium"),
-    LARGE("Large");
+    Small("Small"),
+    Medium("Medium"),
+    Large("Large");
 
     private final String enumSize;
 

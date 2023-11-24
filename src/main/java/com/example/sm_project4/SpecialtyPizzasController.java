@@ -23,12 +23,7 @@ public class SpecialtyPizzasController {
 
     @FXML
     private ImageView pizzaImage;
-
-    private final Order currentOrder;
-
-    public SpecialtyPizzasController(Order currentOrder) {
-        this.currentOrder = currentOrder;
-    }
+    
 
     public void initialize() {
         pizzaDropdown.setValue("Deluxe");
@@ -108,7 +103,6 @@ public class SpecialtyPizzasController {
         }
     }
 
-
     public void handleAddToOrder() {
         String selectedPizza = pizzaDropdown.getValue();
 
@@ -118,8 +112,10 @@ public class SpecialtyPizzasController {
         pizza.size = Size.valueOf(((RadioButton) size.getSelectedToggle()).getText());
         pizza.extraCheese = extra_cheese.isSelected();
         pizza.extraSauce = extra_sauce.isSelected();
+        String pizzer = pizza.toString();
 
-
+        Order currentOrder;
+        currentOrder = new Order();
         currentOrder.addPizza(pizza);
         OrderAddedPopup();
         reset();
