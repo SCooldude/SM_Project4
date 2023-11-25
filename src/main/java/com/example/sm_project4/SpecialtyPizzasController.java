@@ -131,10 +131,10 @@ public class SpecialtyPizzasController {
                 return smallPrice;
             }
             case "Medium" -> {
-                return smallPrice + 2.0;
+                return smallPrice + 1.0;
             }
             case "Large" -> {
-                return smallPrice + 4.0;
+                return smallPrice + 2.0;
             }
             default -> throw new IllegalStateException("Unexpected value: " + selectedSize.getText());
         }
