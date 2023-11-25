@@ -12,18 +12,23 @@ public abstract class Pizza {
 
     @Override
     public String toString() {
-        String extraSauceOutput = "extra sauce";
-        String extraCheeseOutput = "extra cheese";
-        String toppings = this.toppings.toString();
+        String extraSauceOutput = extraSauce ? "extra sauce" : "";
+        String extraCheeseOutput = extraCheese ? "extra cheese" : "";
 
-        if (!extraSauce) {
-            extraSauceOutput = "";
+        StringBuilder toppingsOutput = new StringBuilder();
+        for (String topping : toppings) {
+            toppingsOutput.append(topping).append(", ");
         }
-        if (!extraCheese) {
-            extraCheeseOutput = "";
+
+        // Remove the trailing comma and space
+        if (toppingsOutput.length() > 0) {
+            toppingsOutput.setLength(toppingsOutput.length() - 2);
         }
-        return "[" + toppings  + "]" + extraSauceOutput + " " + extraCheeseOutput + "$" + price();
+        String formattedPrice = String.format("%.2f", price());
+
+        return toppingsOutput + "  " + size + "  " + extraSauceOutput + " " + extraCheeseOutput + " $" + formattedPrice;
     }
+
 }
 
 

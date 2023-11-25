@@ -14,7 +14,7 @@ public class Deluxe extends Pizza{
         toppings.add(String.valueOf(Topping.MUSHROOM));
         this.toppings = toppings;
         this.sauce = Sauce.TOMATO;
-        this.size = Size.Small; //default is small
+        this.size = Size.Small;
     }
     @Override
     public double price() {

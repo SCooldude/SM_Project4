@@ -91,7 +91,6 @@ public class StoreOrderController implements Initializable {
     @FXML
     void displayPizzas(ActionEvent event) {
         if (soBox.getValue() == null || orders.numberOfOrders() == 0) {
-            //noPizzaAlert();
             totalText.setText("");
             orderList.setItems(null);
             return;
