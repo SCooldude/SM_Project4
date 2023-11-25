@@ -143,6 +143,12 @@ public class SpecialtyPizzasController {
 
         pizza = PizzaMaker.createPizza(pizzaDropdown.getValue());
         pizza.sauce = Sauce.TOMATO;
+
+        if (pizza.toString().equals("Seafood") ) {
+            pizza.sauce = Sauce.ALFREDO;
+        }
+
+
         pizza.size = Size.valueOf(((RadioButton) size.getSelectedToggle()).getText());
         pizza.extraCheese = extra_cheese.isSelected();
         pizza.extraSauce = extra_sauce.isSelected();
