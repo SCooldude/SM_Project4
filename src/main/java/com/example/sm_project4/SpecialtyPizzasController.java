@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class SpecialtyPizzasController {
+    public TextField tomato_alfredo;
     private MainMenuController mainMenuController;
 
     @FXML
@@ -82,23 +83,24 @@ public class SpecialtyPizzasController {
         String imagePath = "/com/example/sm_project4/" + selectedPizza.toLowerCase() + ".jpeg";
         Image image = new Image(Objects.requireNonNull(getClass().getResource(imagePath)).toExternalForm());
         pizzaImage.setImage(image);
-
+        if (Objects.equals(pizzaDropdown.getValue(), "Seafood")) {
+            tomato_alfredo.setText("Alfredo");
+        }
+        else {
+            tomato_alfredo.setText("Tomato");
+        }
         updateToppingsList(selectedPizza);
     }
 
     private void updateToppingsList(String selectedPizza) {
         ObservableList<Object> toppingsList = FXCollections.observableArrayList();
 
-        if (selectedPizza.equals("Deluxe")) {
-            toppingsList.addAll("Sausage", "Pepperoni", "Green Pepper", "Onion", "Mushroom");
-        } else if (selectedPizza.equals("Supreme")) {
-            toppingsList.addAll("Sausage", "Pepperoni", "Ham", "Green Pepper", "Onion", "Black Olive", "Mushroom");
-        } else if (selectedPizza.equals("Meatzza")) {
-            toppingsList.addAll("Sausage", "Pepperoni", "Beef", "Ham");
-        } else if (selectedPizza.equals("Pepperoni")) {
-            toppingsList.addAll("Pepperoni");
-        } else {
-            toppingsList.addAll("Shrimp", "Squid", "Crab Meats");
+        switch (selectedPizza) {
+            case "Deluxe" -> toppingsList.addAll("Sausage", "Pepperoni", "Green Pepper", "Onion", "Mushroom");
+            case "Supreme" -> toppingsList.addAll("Sausage", "Pepperoni", "Ham", "Green Pepper", "Onion", "Black Olive", "Mushroom");
+            case "Meatzza" -> toppingsList.addAll("Sausage", "Pepperoni", "Beef", "Ham");
+            case "Pepperoni" -> toppingsList.addAll("Pepperoni");
+            default -> toppingsList.addAll("Shrimp", "Squid", "Crab Meats");
         }
         toppingsListView.setItems(toppingsList);
         updatePizzaPrice();

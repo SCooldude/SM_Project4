@@ -43,7 +43,7 @@
 
     <Label layoutX="300" layoutY="250" text="Sauce" />
 
-    <TextField  layoutX="300" layoutY="270" text="tomato" />
+    <TextField  fx:id="tomato_alfredo" layoutX="300" layoutY="270" text="Tomato" />
 
     <CheckBox  layoutX="300"  layoutY="300" fx:id="extra_sauce" text="Extra Sauce" />
     <CheckBox  layoutX="300" layoutY="320" fx:id="extra_cheese" text="Extra Cheese" />

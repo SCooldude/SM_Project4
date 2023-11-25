@@ -25,18 +25,9 @@ public class StoreOrders {
         Order firstOrder = new Order(0, pizzaList);
         this.storeOrders.add(firstOrder);
     }
-    public StoreOrders(ArrayList<Order> storeOrders){
-        this.storeOrders = storeOrders;
-    }
-    //will add more later
-
-    public ArrayList<Order> getStoreOrders() {
-        return this.storeOrders;
-    }
 
     public int getAvailable_OrderNumber() {
-        int returnNum = orderNumber;
-        return returnNum;
+        return orderNumber;
     }
 
     public int findIndexOfOrder(Order order){
@@ -62,12 +53,12 @@ public class StoreOrders {
     }
 
     public ArrayList<Integer> getOrderNumbers(){
-        ArrayList<Integer> orderNums = new ArrayList<>();
+        ArrayList<Integer> orderNumb = new ArrayList<>();
         for (Order storeOrder : this.storeOrders) {
             int tempNum = storeOrder.getOrderNumber();
-            orderNums.add(tempNum);
+            orderNumb.add(tempNum);
         }
-        return orderNums;
+        return orderNumb;
     }
 
     public Order find(int orderNumber){
@@ -96,7 +87,7 @@ public class StoreOrders {
         double tax = 0.06625;
         total = (total*tax) + total;
 
-        StringBuilder returnString = new StringBuilder("Order Number " + Integer.toString(orderNumber));
+        StringBuilder returnString = new StringBuilder("Order Number " + orderNumber);
         ArrayList<String> pizzaStrings = order.getPizzas();
         if(pizzaStrings.isEmpty()){
             return "";

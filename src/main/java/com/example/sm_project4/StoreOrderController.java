@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;

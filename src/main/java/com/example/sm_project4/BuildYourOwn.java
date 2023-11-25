@@ -36,7 +36,7 @@ public class BuildYourOwn extends Pizza{
     }
 
     public BuildYourOwn() {
-        this.toppings = new ArrayList<String>();
+        this.toppings = new ArrayList<>();
         this.size = Size.Small;
     }
 }
