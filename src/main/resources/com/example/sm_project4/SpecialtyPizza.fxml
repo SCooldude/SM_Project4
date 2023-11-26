@@ -33,7 +33,7 @@
         <RadioButton text="Large" toggleGroup="$size" />
     </VBox>
 
-    <ImageView fx:id="pizzaImage" fitHeight="200" fitWidth="200" layoutX="10" layoutY="30" />
+    <ImageView fx:id="image" fitHeight="200" fitWidth="200" layoutX="10" layoutY="30" />
 
     <Label layoutX="10" layoutY="230" text="Toppings" />
 
@@ -45,8 +45,8 @@
 
     <TextField  fx:id="tomato_alfredo" layoutX="300" layoutY="270" text="Tomato" />
 
-    <CheckBox  layoutX="300"  layoutY="300" fx:id="extra_sauce" text="Extra Sauce" />
-    <CheckBox  layoutX="300" layoutY="320" fx:id="extra_cheese" text="Extra Cheese" />
+    <CheckBox layoutX="300" layoutY="300" fx:id="extraSauce" text="Extra Sauce" />
+    <CheckBox layoutX="300" layoutY="320" fx:id="extraCheese" text="Extra Cheese" />
 
     <Label layoutX="300" layoutY="360" text="Price $" />
 

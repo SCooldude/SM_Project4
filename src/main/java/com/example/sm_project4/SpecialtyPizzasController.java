@@ -26,10 +26,10 @@ public class SpecialtyPizzasController {
     private ToggleGroup size;
 
     @FXML
-    private CheckBox extra_sauce;
+    private CheckBox extraSauce;
 
     @FXML
-    private CheckBox extra_cheese;
+    private CheckBox extraCheese;
 
     @FXML
     private TextField Amount;
@@ -41,29 +41,20 @@ public class SpecialtyPizzasController {
     private ComboBox<String> pizzaDropdown;
 
     @FXML
-    private ImageView pizzaImage;
+    private ImageView image;
 
 
     public void setMainMenuController(MainMenuController controller) {
         mainMenuController = controller;
     }
 
-    @FXML
-    private void BackButton(ActionEvent event) throws IOException {
-        Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
-        Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("RU Pizza");
-        stage.setScene(mainMenuScene);
-        stage.show();
-    }
 
     public void initialize() {
         pizzaDropdown.setValue("Deluxe");
         String deluxeImagePath = "/com/example/sm_project4/deluxe.jpeg";
         Image deluxeImage = new Image(Objects.requireNonNull(getClass().getResource(deluxeImagePath)).toExternalForm());
-        pizzaImage.setImage(deluxeImage);
+        image.setImage(deluxeImage);
         RadioButton smallRadioButton = (RadioButton) size.getToggles().get(0);
         smallRadioButton.setSelected(true);
         updateToppingsList("Deluxe");
@@ -73,8 +64,8 @@ public class SpecialtyPizzasController {
                 updatePizzaPrice();
             }
         });
-        extra_sauce.selectedProperty().addListener((sauce) -> updatePizzaPrice());
-        extra_cheese.selectedProperty().addListener((cheese) -> updatePizzaPrice());
+        extraSauce.selectedProperty().addListener((sauce) -> updatePizzaPrice());
+        extraCheese.selectedProperty().addListener((cheese) -> updatePizzaPrice());
     }
 
     @FXML
@@ -82,7 +73,7 @@ public class SpecialtyPizzasController {
         String selectedPizza = pizzaDropdown.getValue();
         String imagePath = "/com/example/sm_project4/" + selectedPizza.toLowerCase() + ".jpeg";
         Image image = new Image(Objects.requireNonNull(getClass().getResource(imagePath)).toExternalForm());
-        pizzaImage.setImage(image);
+        this.image.setImage(image);
         if (Objects.equals(pizzaDropdown.getValue(), "Seafood")) {
             tomato_alfredo.setText("Alfredo");
         }
@@ -98,8 +89,8 @@ public class SpecialtyPizzasController {
         switch (selectedPizza) {
             case "Deluxe" -> toppingsList.addAll("Sausage", "Pepperoni", "Green Pepper", "Onion", "Mushroom");
             case "Supreme" -> toppingsList.addAll("Sausage", "Pepperoni", "Ham", "Green Pepper", "Onion", "Black Olive", "Mushroom");
-            case "Meatzza" -> toppingsList.addAll("Sausage", "Pepperoni", "Beef", "Ham");
             case "Pepperoni" -> toppingsList.addAll("Pepperoni");
+            case "Meatzza" -> toppingsList.addAll("Sausage", "Pepperoni", "Beef", "Ham");
             default -> toppingsList.addAll("Shrimp", "Squid", "Crab Meats");
         }
         toppingsListView.setItems(toppingsList);
@@ -110,31 +101,31 @@ public class SpecialtyPizzasController {
         double basePrice;
         switch (pizzaDropdown.getValue()) {
             case "Deluxe" -> basePrice = getSizeBasePrice(14.99);
-            case "Supreme" -> basePrice = getSizeBasePrice(15.99);
-            case "Meatzza" -> basePrice = getSizeBasePrice(16.99);
             case "Seafood" -> basePrice = getSizeBasePrice(17.99);
+            case "Meatzza" -> basePrice = getSizeBasePrice(16.99);
+            case "Supreme" -> basePrice = getSizeBasePrice(15.99);
             case "Pepperoni" -> basePrice = getSizeBasePrice(10.99);
             default -> basePrice = getSizeBasePrice(0.0);
         }
 
-        double saucePrice = extra_sauce.isSelected() ? 1.0 : 0.0;
-        double cheesePrice = extra_cheese.isSelected() ? 1.0 : 0.0;
+        double saucePrice = extraSauce.isSelected() ? 1.0 : 0.0;
+        double cheesePrice = extraCheese.isSelected() ? 1.0 : 0.0;
 
         double totalPrice = getSizeBasePrice(basePrice) + saucePrice + cheesePrice;
         Amount.setText(String.format("%.2f", totalPrice));
     }
 
-    private double getSizeBasePrice(double smallPrice) {
+    private double getSizeBasePrice(double small_Price) {
         RadioButton selectedSize = (RadioButton) size.getSelectedToggle();
         switch (selectedSize.getText()) {
             case "Small" -> {
-                return smallPrice;
+                return small_Price;
             }
             case "Medium" -> {
-                return smallPrice + 1.0;
+                return small_Price + 1.0;
             }
             case "Large" -> {
-                return smallPrice + 2.0;
+                return small_Price + 2.0;
             }
             default -> throw new IllegalStateException("Unexpected value: " + selectedSize.getText());
         }
@@ -151,8 +142,8 @@ public class SpecialtyPizzasController {
         }
 
         pizza.size = Size.valueOf(((RadioButton) size.getSelectedToggle()).getText());
-        pizza.extraCheese = extra_cheese.isSelected();
-        pizza.extraSauce = extra_sauce.isSelected();
+        pizza.extraCheese = extraCheese.isSelected();
+        pizza.extraSauce = extraSauce.isSelected();
 
         StoreOrders orders = mainMenuController.getStores();
         int currentOrderNumber = orders.nextAvailableNumber();
@@ -167,10 +158,20 @@ public class SpecialtyPizzasController {
         pizzaDropdown.setValue("Deluxe");
         RadioButton smallRadioButton = (RadioButton) size.getToggles().get(0);
         smallRadioButton.setSelected(true);
-        extra_sauce.setSelected(false);
-        extra_cheese.setSelected(false);
+        extraSauce.setSelected(false);
+        extraCheese.setSelected(false);
         updateToppingsList("Deluxe");
         updatePizzaPrice();
+    }
+    @FXML
+    private void BackButton(ActionEvent event) throws IOException {
+        Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
+        Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("RU Pizza");
+        stage.setScene(mainMenuScene);
+        stage.show();
     }
 
     private void orderAddedPopup() {
