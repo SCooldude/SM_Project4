@@ -150,13 +150,12 @@ public class SpecialtyPizzasController {
             pizza.sauce = Sauce.ALFREDO;
         }
 
-
         pizza.size = Size.valueOf(((RadioButton) size.getSelectedToggle()).getText());
         pizza.extraCheese = extra_cheese.isSelected();
         pizza.extraSauce = extra_sauce.isSelected();
 
         StoreOrders orders = mainMenuController.getStores();
-        int currentOrderNumber = orders.getAvailable_OrderNumber();
+        int currentOrderNumber = orders.nextAvailableNumber();
 
         Order currentOrder = orders.find(currentOrderNumber);
         currentOrder.addPizza(pizza);

@@ -119,6 +119,11 @@ public class BuildYourOwnPizzaController {
 
     public void handlePlaceOrder() {
 
+        if (selectedToppingsListView.getItems().size() <= 2) {
+            showAlert("Not Enough Toppings");
+            return;
+        }
+
         Pizza pizza = PizzaMaker.createPizza("Build Your Own");
 
         pizza.size = Size.valueOf(sizeDropdown.getValue());
@@ -128,7 +133,7 @@ public class BuildYourOwnPizzaController {
         pizza.toppings.addAll(selectedToppingsListView.getItems());
 
         StoreOrders orders = mainMenuController.getStores();
-        int currentOrderNumber = orders.getAvailable_OrderNumber();
+        int currentOrderNumber = orders.nextAvailableNumber();
 
         Order currentOrder = orders.find(currentOrderNumber);
         currentOrder.addPizza(pizza);

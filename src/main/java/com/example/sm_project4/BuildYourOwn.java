@@ -11,7 +11,7 @@ public class BuildYourOwn extends Pizza {
     public double price(){
         double total = 8.99;
         if (this.size == Size.Medium){
-            total = 2;
+            total += 2;
         }
         if(this.size == Size.Large){
             total += 4;

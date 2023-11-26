@@ -61,7 +61,7 @@ public class StoreOrderController implements Initializable {
     private void setPrice() {
         int orderNum = soBox.getValue();
         double taxes = 0.06625;
-        double subtotal = orders.find(orderNum).total();
+        double subtotal = orders.find(orderNum).totalCost();
         double total = (subtotal * taxes) + subtotal;
         String totalString = new DecimalFormat("#,##0.00").format(total);
         totalText.setText(totalString);
@@ -83,7 +83,7 @@ public class StoreOrderController implements Initializable {
         }
 
         Order selectedOrder = orders.find(soBox.getValue());
-        ArrayList<String> pizzas = selectedOrder.getPizzas();
+        ArrayList<String> pizzas = selectedOrder.getPizzaStrings();
         ObservableList<String> pizzaString = FXCollections.observableArrayList(pizzas);
         orderList.setItems(pizzaString);
         setPrice();
@@ -111,7 +111,7 @@ public class StoreOrderController implements Initializable {
             return;
         }
         orders = mainController.getStores();
-        ArrayList<String> pizzaList = orders.find(currentNumb).getPizzas();
+        ArrayList<String> pizzaList = orders.find(currentNumb).getPizzaStrings();
         if (pizzaList.isEmpty()) {
             showAlert("Order", "Nothing in order");
             return;
@@ -152,7 +152,7 @@ public class StoreOrderController implements Initializable {
         orders = mainController.get_control().getStores();
         currentOrderNumbers = mainController.get_control().getStores().getOrderNumbers();
         int index = currentOrderNumbers.get(currentOrderNumbers.size()-1);
-        return orders.find(index).getPizzas().isEmpty();
+        return orders.find(index).getPizzaStrings().isEmpty();
 
     }
     @FXML

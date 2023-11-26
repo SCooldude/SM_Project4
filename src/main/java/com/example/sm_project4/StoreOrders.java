@@ -24,7 +24,7 @@ public class StoreOrders {
         this.storeOrders.add(firstOrder);
     }
 
-    public int getAvailable_OrderNumber() {
+    public int nextAvailableNumber() {
         return orderNumber;
     }
     public int findIndexOfOrder(Order order){
@@ -70,12 +70,12 @@ public class StoreOrders {
     public String orderToString(int index){
         Order order = storeOrders.get(index);
         int orderNumber = order.getOrderNumber();
-        double total = order.total();
+        double total = order.totalCost();
         double tax = 0.06625;
         total = (total*tax) + total;
 
         StringBuilder returnString = new StringBuilder("Order Number " + orderNumber);
-        ArrayList<String> pizzaStrings = order.getPizzas();
+        ArrayList<String> pizzaStrings = order.getPizzaStrings();
         if(pizzaStrings.isEmpty()){
             return "";
         }

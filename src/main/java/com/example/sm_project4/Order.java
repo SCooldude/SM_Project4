@@ -11,28 +11,28 @@ public class Order {
         this.orderNumber = OrderNumber;
         this.pizzas = pizzas;
     }
-
+    public int getOrderNumber() {
+        return orderNumber;
+    }
+    public void removePizza(int index){
+        pizzas.remove(index);
+    }
     public void addPizza(Pizza pizza) {
         pizzas.add(pizza);
     }
-    public void removePizza(int index){ pizzas.remove(index);
-    }
-    public ArrayList<String> getPizzas() {
+    public ArrayList<String> getPizzaStrings() {
         ArrayList<String> pizzas = new ArrayList<>();
         for (Pizza pizza : this.pizzas) {
             pizzas.add(pizza.toString());
         }
         return pizzas;
     }
-    public double total() {
+    public double totalCost() {
         double total = 0;
         for (Pizza pizza : this.pizzas) {
             total += pizza.price();
         }
         return total;
-    }
-    public int getOrderNumber() {
-        return orderNumber;
     }
 }
 
