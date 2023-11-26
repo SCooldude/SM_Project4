@@ -27,15 +27,15 @@ public class StoreOrderController implements Initializable {
     private TextField totalText;
     @FXML
     private ChoiceBox<Integer> soBox;
-    private MainMenuController mainController = new MainMenuController().getReference();
+    private MainMenuController mainController = new MainMenuController().get_control();
     private StoreOrders orders;
     private ArrayList<Integer> currentOrderNumbers;
 
-    public void setMainController(MainMenuController controller) {
+    public void setMainMenuController(MainMenuController controller) {
         mainController = controller;
     }
     @FXML
-    private void onBackButtonClick(ActionEvent event) throws IOException {
+    private void BackButton(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
         Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
 
@@ -47,7 +47,7 @@ public class StoreOrderController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        orders = mainController.getStoreOrders();
+        orders = mainController.getStores();
         if (orders.numberOfOrders() == 0) {
             showAlert("No Pizza", "Nothing available");
             return;
@@ -56,8 +56,6 @@ public class StoreOrderController implements Initializable {
         soBox.getItems().addAll(currentOrderNumbers);
         soBox.setOnAction(this::displayPizzas);
         soBox.setValue(0);
-
-
     }
     @FXML
     private void setPrice() {
@@ -72,7 +70,7 @@ public class StoreOrderController implements Initializable {
     @FXML
     private void updateChoiceBox() {
         soBox.getItems().removeAll(currentOrderNumbers);
-        currentOrderNumbers = mainController.getStoreOrders().getOrderNumbers();
+        currentOrderNumbers = mainController.getStores().getOrderNumbers();
         soBox.getItems().addAll(currentOrderNumbers);
 
     }
@@ -105,14 +103,14 @@ public class StoreOrderController implements Initializable {
             return;
         }
 
-        ArrayList<Integer> ordersPlaced = mainController.getReference().getOrdersPlaced();
+        ArrayList<Integer> ordersPlaced = mainController.get_control().get_placed();
         int currentNumb = soBox.getValue();
 
         if (!contains(ordersPlaced, currentNumb)) {
             showAlert("Cancel", "Nothing placed");
             return;
         }
-        orders = mainController.getStoreOrders();
+        orders = mainController.getStores();
         ArrayList<String> pizzaList = orders.find(currentNumb).getPizzas();
         if (pizzaList.isEmpty()) {
             showAlert("Order", "Nothing in order");
@@ -141,7 +139,7 @@ public class StoreOrderController implements Initializable {
     }
 
     private void removeOrderPlaced(int orderNumber){
-        ArrayList<Integer> ordersPlaced = mainController.getReference().getOrdersPlaced();
+        ArrayList<Integer> ordersPlaced = mainController.get_control().get_placed();
         for (int i =0; i<ordersPlaced.size(); i++){
             if(ordersPlaced.get(i) == orderNumber){
                 ordersPlaced.remove(i);
@@ -151,8 +149,8 @@ public class StoreOrderController implements Initializable {
     }
 
     private boolean allOrdersPlaced(){
-        orders = mainController.getReference().getStoreOrders();
-        currentOrderNumbers = mainController.getReference().getStoreOrders().getOrderNumbers();
+        orders = mainController.get_control().getStores();
+        currentOrderNumbers = mainController.get_control().getStores().getOrderNumbers();
         int index = currentOrderNumbers.get(currentOrderNumbers.size()-1);
         return orders.find(index).getPizzas().isEmpty();
 

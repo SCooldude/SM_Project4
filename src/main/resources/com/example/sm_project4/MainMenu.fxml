@@ -18,7 +18,7 @@
 
     <center>
         <VBox alignment="CENTER" spacing="10">
-            <Button mnemonicParsing="false" onAction="#handleBuildYourOwn" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
+            <Button mnemonicParsing="false" onAction="#BuildYourOwn" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
                 <graphic>
                     <VBox alignment="CENTER">
                         <ImageView fitHeight="80.0" fitWidth="124.0" preserveRatio="true">
@@ -28,7 +28,7 @@
                     </VBox>
                 </graphic>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleOrderSpecialtyPizzas" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
+            <Button mnemonicParsing="false" onAction="#OrderSpecialtyPizza" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
                 <graphic>
                     <VBox alignment="CENTER">
                         <ImageView fitHeight="80.0" fitWidth="124.0" preserveRatio="true">
@@ -38,7 +38,7 @@
                     </VBox>
                 </graphic>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleCurrentOrder" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
+            <Button mnemonicParsing="false" onAction="#CurrentOrder" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
                 <graphic>
                     <VBox alignment="CENTER">
                         <ImageView fitHeight="80.0" fitWidth="124.0" preserveRatio="true">
@@ -48,7 +48,7 @@
                     </VBox>
                 </graphic>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleStoreOrders" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
+            <Button mnemonicParsing="false" onAction="#StoreOrders" style="-fx-font-size: 18px; -fx-min-width: 200px; -fx-min-height: 60px;">
                 <graphic>
                     <VBox alignment="CENTER">
                         <ImageView fitHeight="80.0" fitWidth="124.0" preserveRatio="true">

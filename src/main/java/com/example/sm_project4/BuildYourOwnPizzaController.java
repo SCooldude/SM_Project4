@@ -42,12 +42,12 @@ public class BuildYourOwnPizzaController {
     @FXML
     private CheckBox extraCheeseCheckbox;
 
-    public void setMainController(MainMenuController controller) {
+    public void setMainMenuController(MainMenuController controller) {
         mainMenuController = controller;
     }
 
     @FXML
-    private void onBackButtonClick(ActionEvent event) throws IOException {
+    private void BackButton(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
         Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
 
@@ -127,7 +127,7 @@ public class BuildYourOwnPizzaController {
 
         pizza.toppings.addAll(selectedToppingsListView.getItems());
 
-        StoreOrders orders = mainMenuController.getStoreOrders();
+        StoreOrders orders = mainMenuController.getStores();
         int currentOrderNumber = orders.getAvailable_OrderNumber();
 
         Order currentOrder = orders.find(currentOrderNumber);

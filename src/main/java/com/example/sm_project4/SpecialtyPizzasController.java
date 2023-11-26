@@ -44,12 +44,12 @@ public class SpecialtyPizzasController {
     private ImageView pizzaImage;
 
 
-    public void setMainController(MainMenuController controller) {
+    public void setMainMenuController(MainMenuController controller) {
         mainMenuController = controller;
     }
 
     @FXML
-    private void onBackButtonClick(ActionEvent event) throws IOException {
+    private void BackButton(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
         Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
 
@@ -155,7 +155,7 @@ public class SpecialtyPizzasController {
         pizza.extraCheese = extra_cheese.isSelected();
         pizza.extraSauce = extra_sauce.isSelected();
 
-        StoreOrders orders = mainMenuController.getStoreOrders();
+        StoreOrders orders = mainMenuController.getStores();
         int currentOrderNumber = orders.getAvailable_OrderNumber();
 
         Order currentOrder = orders.find(currentOrderNumber);

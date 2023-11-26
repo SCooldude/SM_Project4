@@ -33,7 +33,7 @@ public class CurrentOrderController {
     @FXML
     private TextField orderTotalTextField;
 
-    public void setMainController(MainMenuController controller) {
+    public void setMainMenuController(MainMenuController controller) {
         mainController = controller;
         setOrderNumber();
         setPizzas();
@@ -41,11 +41,11 @@ public class CurrentOrderController {
     }
     @FXML
     private void setOrderNumber() {
-        String currentOrderNum = String.valueOf(mainController.getStoreOrders().getAvailable_OrderNumber());
+        String currentOrderNum = String.valueOf(mainController.getStores().getAvailable_OrderNumber());
         orderNumberTextField.setText(currentOrderNum);
     }
     @FXML
-    private void onBackButtonClick(ActionEvent event) throws IOException {
+    private void BackButton(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
         Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
 
@@ -56,8 +56,8 @@ public class CurrentOrderController {
     }
     @FXML
     private void setPizzas() {
-        int currentOrderNum = mainController.getStoreOrders().getAvailable_OrderNumber();
-        StoreOrders orders = mainController.getStoreOrders();
+        int currentOrderNum = mainController.getStores().getAvailable_OrderNumber();
+        StoreOrders orders = mainController.getStores();
         Order currentOrder = orders.find(currentOrderNum);
         ArrayList<String> pizzas = currentOrder.getPizzas();
         ObservableList<String> pizzaString = FXCollections.observableArrayList(pizzas);
@@ -65,8 +65,8 @@ public class CurrentOrderController {
     }
     @FXML
     private void setPrices() {
-        int currentOrderNum = mainController.getStoreOrders().getAvailable_OrderNumber();
-        StoreOrders orders = mainController.getStoreOrders();
+        int currentOrderNum = mainController.getStores().getAvailable_OrderNumber();
+        StoreOrders orders = mainController.getStores();
         Order currentOrder = orders.find(currentOrderNum);
 
         double subtotalDouble = currentOrder.total();
@@ -84,8 +84,8 @@ public class CurrentOrderController {
         SelectionModel<String> selected = currentOrdersListView.getSelectionModel();
         int selectedIndex = selected.getSelectedIndex();
 
-        StoreOrders orders = mainController.getStoreOrders();
-        Order currentOrder = orders.find(mainController.getStoreOrders().getAvailable_OrderNumber());
+        StoreOrders orders = mainController.getStores();
+        Order currentOrder = orders.find(mainController.getStores().getAvailable_OrderNumber());
         try {
             currentOrder.removePizza(selectedIndex);
         } catch (IndexOutOfBoundsException e) {
@@ -98,8 +98,8 @@ public class CurrentOrderController {
 
     @FXML
     protected void handlePlaceOrder() {
-        int currIndex = mainController.getStoreOrders().getAvailable_OrderNumber();
-        StoreOrders orders = mainController.getStoreOrders();
+        int currIndex = mainController.getStores().getAvailable_OrderNumber();
+        StoreOrders orders = mainController.getStores();
 
         ArrayList<String> pizzaList = orders.find(currIndex).getPizzas();
         if (pizzaList.isEmpty()) {
@@ -108,7 +108,7 @@ public class CurrentOrderController {
         }
 
         orders.addOrder(orders.find(currIndex));
-        mainController.getOrdersPlaced().add(currIndex);
+        mainController.get_placed().add(currIndex);
 
         setPizzas();
         setPrices();

@@ -10,85 +10,64 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 public class MainMenuController {
     private static final StoreOrders orders = new StoreOrders();
-    private static final ArrayList<Integer> ordersPlaced = new ArrayList<>();
+    private static final ArrayList<Integer> placed_orders = new ArrayList<>();
 
-    @FXML
-    protected void handleBuildYourOwn(ActionEvent event) throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("BuildYourOwnPizza.fxml"));
-
-        Parent buildYourOwnRoot = loader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Customize Your Pizza");
-        Scene buildYourOwnScene = new Scene(buildYourOwnRoot);
-
-        stage.setScene(buildYourOwnScene);
-        stage.show();
-        BuildYourOwnPizzaController byoController = loader.getController();
-        byoController.setMainController(this);
+    public ArrayList<Integer> get_placed() {
+        return placed_orders;
     }
-
-    @FXML
-    protected void handleOrderSpecialtyPizzas(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SpecialtyPizza.fxml"));
-
-        Parent specialtyPizzaRoot = loader.load();
-        Scene specialtyPizzaScene = new Scene(specialtyPizzaRoot);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Specialty Pizzas");
-
-        stage.setScene(specialtyPizzaScene);
-        stage.show();
-        SpecialtyPizzasController specialtyPizzaController = loader.getController();
-        specialtyPizzaController.setMainController(this);
-    }
-
-    @FXML
-    protected void handleCurrentOrder(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("CurrentOrder.fxml"));
-
-        Parent currentOrderRoot = loader.load();
-        Scene currentOrderScene = new Scene(currentOrderRoot);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Order Detail");
-
-        stage.setScene(currentOrderScene);
-        stage.show();
-
-        CurrentOrderController currentOrderController = loader.getController();
-        currentOrderController.setMainController(this);
-    }
-    @FXML
-    protected void handleStoreOrders(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("StoreOrder.fxml"));
-
-        Parent storeOrdersRoot = loader.load();
-        Scene storeOrdersScene = new Scene(storeOrdersRoot);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Store Orders");
-
-        stage.setScene(storeOrdersScene);
-        stage.show();
-
-        StoreOrderController storeOrdersController = loader.getController();
-
-        storeOrdersController.setMainController(this);
-    }
-
-    public StoreOrders getStoreOrders() {
+    public StoreOrders getStores() {
         return orders;
     }
-
-    public MainMenuController getReference(){
+    public MainMenuController get_control() {
         return this;
     }
+    @FXML
+    protected void Navigation(ActionEvent event, String pathway, String title) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(pathway));
+        Parent root = loader.load();
 
-    public ArrayList<Integer> getOrdersPlaced(){ return ordersPlaced;}
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
 
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+        switch (pathway) {
+            case "BuildYourOwnPizza.fxml" -> {
+                BuildYourOwnPizzaController controller = loader.getController();
+                controller.setMainMenuController(this);
+            }
+            case "SpecialtyPizza.fxml" -> {
+                SpecialtyPizzasController controller = loader.getController();
+                controller.setMainMenuController(this);
+            }
+            case "CurrentOrder.fxml" -> {
+                CurrentOrderController controller = loader.getController();
+                controller.setMainMenuController(this);
+            }
+            case "StoreOrder.fxml" -> {
+                StoreOrderController controller = loader.getController();
+                controller.setMainMenuController(this);
+            }
+        }
+    }
+    @FXML
+    protected void BuildYourOwn(ActionEvent event) throws IOException {
+        Navigation(event, "BuildYourOwnPizza.fxml", "Customize Your Pizza");
+    }
+    @FXML
+    protected void OrderSpecialtyPizza(ActionEvent event) throws IOException {
+        Navigation(event, "SpecialtyPizza.fxml", "Specialty Pizzas");
+    }
+    @FXML
+    protected void CurrentOrder(ActionEvent event) throws IOException {
+        Navigation(event, "CurrentOrder.fxml", "Order Detail");
+    }
+    @FXML
+    protected void StoreOrders(ActionEvent event) throws IOException {
+        Navigation(event, "StoreOrder.fxml", "Store Orders");
+    }
 }

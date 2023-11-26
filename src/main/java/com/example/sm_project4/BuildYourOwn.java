@@ -2,24 +2,25 @@ package com.example.sm_project4;
 
 import java.util.ArrayList;
 
-public class BuildYourOwn extends Pizza{
-
-    public static double price = 8.99;
-
+public class BuildYourOwn extends Pizza {
+    public BuildYourOwn() {
+        this.toppings = new ArrayList<>();
+        this.size = Size.Small;
+    }
     @Override
     public double price(){
-        double total = price;
-        if(this.size == Size.Medium){
-            total= 2;
+        double total = 8.99;
+        if (this.size == Size.Medium){
+            total = 2;
         }
         if(this.size == Size.Large){
-            total+=4;
+            total += 4;
         }
         if(this.extraCheese){
-            total+=1;
+            total += 1;
         }
         if(this.extraSauce){
-            total+=1;
+            total += 1;
         }
         if(this.toppings.size() > 3){
             total += (toppings.size() - 3) * 1.49;
@@ -33,10 +34,5 @@ public class BuildYourOwn extends Pizza{
     @Override
     public String pizzaType() {
         return "BuildYourOwn";
-    }
-
-    public BuildYourOwn() {
-        this.toppings = new ArrayList<>();
-        this.size = Size.Small;
     }
 }

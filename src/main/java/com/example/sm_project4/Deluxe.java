@@ -3,8 +3,6 @@ package com.example.sm_project4;
 import java.util.ArrayList;
 
 public class Deluxe extends Pizza{
-
-
     public Deluxe() {
         ArrayList<String> toppings = new ArrayList<>();
         toppings.add(String.valueOf(Topping.SAUSAGE));
