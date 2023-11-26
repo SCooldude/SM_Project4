@@ -9,7 +9,7 @@ public class PizzaMaker {
             case "Seafood" -> new Seafood();
             case "Supreme" -> new Supreme();
             case "Build Your Own" -> new BuildYourOwn();
-            default -> throw new IllegalStateException("Unexpected value: " + pizzaType);
+            default -> throw new IllegalStateException("Unknown type");
         };
     }
 }

@@ -18,9 +18,14 @@ public class BuildYourOwnPizzaController {
 
     private MainMenuController mainMenuController;
 
-    public TextField amountTextField;
-    public ImageView pizzaImage;
-    public ToggleGroup two_sauce;
+    @FXML
+    private TextField amountTextField;
+
+    @FXML
+    private ImageView pizzaImage;
+
+    @FXML
+    private ToggleGroup two_sauce;
 
     @FXML
     private ComboBox<String> sizeDropdown;
@@ -37,8 +42,6 @@ public class BuildYourOwnPizzaController {
     @FXML
     private CheckBox extraCheeseCheckbox;
 
-    private Pizza pizza;
-
     public void setMainController(MainMenuController controller) {
         mainMenuController = controller;
     }
@@ -46,7 +49,7 @@ public class BuildYourOwnPizzaController {
     @FXML
     private void onBackButtonClick(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
-        Scene mainMenuScene = new Scene(mainMenuRoot);
+        Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("RU Pizza");
@@ -74,20 +77,10 @@ public class BuildYourOwnPizzaController {
     }
 
     public void handleAddTopping() {
-        // Get the selected topping from the Additional Toppings ListView
         String selectedTopping = additionalToppingsListView.getSelectionModel().getSelectedItem();
-
-        // Check if a topping is selected
-        if (selectedTopping != null) {
-            // Add the selected topping to the Selected Toppings ListView
+        if (selectedTopping != null && selectedToppingsListView.getItems().size() <= 6) {
             selectedToppingsListView.getItems().add(selectedTopping);
-
-            // Remove the selected topping from the Additional Toppings ListView
             additionalToppingsListView.getItems().remove(selectedTopping);
-        }
-        int selectedToppingsCount = selectedToppingsListView.getItems().size();
-
-        if (selectedToppingsCount <= 7) {
             updatePizzaPrice();
         } else {
             showAlert("Maximum 7 toppings allowed.");
@@ -97,16 +90,9 @@ public class BuildYourOwnPizzaController {
     public void handleRemoveTopping() {
         String selectedTopping = selectedToppingsListView.getSelectionModel().getSelectedItem();
 
-        // Check if a topping is selected
-        if (selectedTopping != null) {
-            // Add the selected topping back to the Additional Toppings ListView
+        if (selectedTopping != null && selectedToppingsListView.getItems().size() >= 4) {
             additionalToppingsListView.getItems().add(selectedTopping);
-            // Remove the selected topping from the Selected Toppings ListView
             selectedToppingsListView.getItems().remove(selectedTopping);
-        }
-        int selectedToppingsCount = selectedToppingsListView.getItems().size();
-
-        if (selectedToppingsCount > 3) {
             updatePizzaPrice();
         } else {
             showAlert("Minimum 3 toppings required.");
@@ -114,20 +100,10 @@ public class BuildYourOwnPizzaController {
     }
     private void updatePizzaPrice() {
         int selectedToppingsCount = selectedToppingsListView.getItems().size();
-
-        // Calculate additional toppings cost
         double additionalToppingsCost = Math.max(selectedToppingsCount - 3, 0) * 1.49;
-
-        // Calculate size cost
         double sizeCost = calculateSizeCost();
-
-        // Calculate sauce cost
         double sauceCost = (extraSauceCheckbox.isSelected()) ? 1.0 : 0.0;
-
-        // Calculate cheese cost
         double cheeseCost = (extraCheeseCheckbox.isSelected()) ? 1.0 : 0.0;
-
-        // Calculate total cost
         double totalPrice = additionalToppingsCost + sizeCost + sauceCost + cheeseCost;
 
         amountTextField.setText(String.format("%.2f", totalPrice));
@@ -143,7 +119,7 @@ public class BuildYourOwnPizzaController {
 
     public void handlePlaceOrder() {
 
-        pizza = PizzaMaker.createPizza("Build Your Own");
+        Pizza pizza = PizzaMaker.createPizza("Build Your Own");
 
         pizza.size = Size.valueOf(sizeDropdown.getValue());
         pizza.extraCheese = extraCheeseCheckbox.isSelected();

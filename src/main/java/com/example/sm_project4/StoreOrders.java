@@ -15,12 +15,10 @@ import java.util.ArrayList;
 public class StoreOrders {
 
     private final ArrayList<Order> storeOrders;
-
     private static int orderNumber = 0;
 
     public StoreOrders(){
         this.storeOrders = new ArrayList<>();
-        // create first order
         ArrayList<Pizza> pizzaList = new ArrayList<>();
         Order firstOrder = new Order(0, pizzaList);
         this.storeOrders.add(firstOrder);
@@ -29,24 +27,19 @@ public class StoreOrders {
     public int getAvailable_OrderNumber() {
         return orderNumber;
     }
-
     public int findIndexOfOrder(Order order){
         for(int i =0; i<this.storeOrders.size(); i++){
             if(storeOrders.get(i).getOrderNumber() == order.getOrderNumber()){
                 return i;
             }
         }
-        return -1; //NOT FOUND
+        return -1;
     }
 
     public void addOrder(Order order) {
         int index = findIndexOfOrder(order);
         this.storeOrders.set(index, order);
-        //  this.storeOrders.set(getAvailable_OrderNumber(), order);
-
-
         orderNumber++;
-
         ArrayList<Pizza> pizzaList = new ArrayList<>();
         Order setOrder = new Order(orderNumber, pizzaList);
         this.storeOrders.add(setOrder);
@@ -68,12 +61,6 @@ public class StoreOrders {
             }
         }
         return storeOrders.get(0);
-    }
-
-    public boolean removeOrder(int orderNumber){
-        Order removeMe = find(orderNumber);
-        this.storeOrders.remove(removeMe);
-        return true;
     }
 
     public int numberOfOrders(){

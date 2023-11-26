@@ -27,27 +27,17 @@ public class StoreOrderController implements Initializable {
     private TextField totalText;
     @FXML
     private ChoiceBox<Integer> soBox;
-
     private MainMenuController mainController = new MainMenuController().getReference();
     private StoreOrders orders;
-
     private ArrayList<Integer> currentOrderNumbers;
-
 
     public void setMainController(MainMenuController controller) {
         mainController = controller;
     }
-    void noPizzaAlert() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("No Pizza");
-        alert.setContentText("No Pizza Orders Placed");
-        alert.showAndWait();
-    }
-
     @FXML
     private void onBackButtonClick(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
-        Scene mainMenuScene = new Scene(mainMenuRoot);
+        Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("RU Pizza");
@@ -59,18 +49,18 @@ public class StoreOrderController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         orders = mainController.getStoreOrders();
         if (orders.numberOfOrders() == 0) {
-            noPizzaAlert();
+            showAlert("No Pizza", "Nothing available");
             return;
         }
         currentOrderNumbers = orders.getOrderNumbers();
         soBox.getItems().addAll(currentOrderNumbers);
-
         soBox.setOnAction(this::displayPizzas);
+        soBox.setValue(0);
+
 
     }
-
-
-    void setPrice() {
+    @FXML
+    private void setPrice() {
         int orderNum = soBox.getValue();
         double taxes = 0.06625;
         double subtotal = orders.find(orderNum).total();
@@ -80,94 +70,70 @@ public class StoreOrderController implements Initializable {
     }
 
     @FXML
-    void updateChoiceBox(ActionEvent event, int orderNumber) {
+    private void updateChoiceBox() {
         soBox.getItems().removeAll(currentOrderNumbers);
         currentOrderNumbers = mainController.getStoreOrders().getOrderNumbers();
         soBox.getItems().addAll(currentOrderNumbers);
 
     }
-
     @FXML
-    void displayPizzas(ActionEvent event) {
+    private void displayPizzas(ActionEvent event) {
         if (soBox.getValue() == null || orders.numberOfOrders() == 0) {
             totalText.setText("");
             orderList.setItems(null);
             return;
         }
 
-        orders = new MainMenuController().getReference().getStoreOrders();
-
         Order selectedOrder = orders.find(soBox.getValue());
         ArrayList<String> pizzas = selectedOrder.getPizzas();
         ObservableList<String> pizzaString = FXCollections.observableArrayList(pizzas);
         orderList.setItems(pizzaString);
-
         setPrice();
     }
 
-    @FXML
-    void emptyCancelAlert(ActionEvent event) {
+    private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Cancel Error");
-        alert.setContentText("Cannot Cancel, No Pizzas In Order");
+        alert.setTitle(title);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 
     @FXML
-    void nullAlert(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Cancel Error");
-        alert.setContentText("Cannot Cancel, No Pizzas Selected");
-        alert.showAndWait();
-    }
-
-    @FXML
-    void cancelSuccessAlert(ActionEvent event){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Cancel Successful");
-        alert.setContentText("Order Successfully Cancelled");
-        alert.showAndWait();
-    }
-
-    @FXML
-    void notPlacedAlert(ActionEvent event){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Cancel Error");
-        alert.setContentText("Order has not been officially placed");
-        alert.showAndWait();
-    }
-
-    @FXML
-    void cancelOrder(ActionEvent event) {
+    private void cancelOrder(ActionEvent event) {
         if (soBox.getValue() == null) {
-            nullAlert(event);
-            return;
-        }
-        ArrayList<Integer> ordersPlaced = mainController.getReference().getOrdersPlaced();
-        if(!contains(ordersPlaced, soBox.getValue())){
-            notPlacedAlert(event);
+            showAlert("Null", "Nothing selected");
             return;
         }
 
-        new MainMenuController();
-        orders = mainController.getStoreOrders();
+        ArrayList<Integer> ordersPlaced = mainController.getReference().getOrdersPlaced();
         int currentNumb = soBox.getValue();
+
+        if (!contains(ordersPlaced, currentNumb)) {
+            showAlert("Cancel", "Nothing placed");
+            return;
+        }
+        orders = mainController.getStoreOrders();
         ArrayList<String> pizzaList = orders.find(currentNumb).getPizzas();
         if (pizzaList.isEmpty()) {
-            emptyCancelAlert(event);
+            showAlert("Order", "Nothing in order");
             return;
         }
-        boolean removeMe = orders.removeOrder(soBox.getValue());
         removeOrderPlaced(currentNumb);
-        updateChoiceBox(event, currentNumb);
-        cancelSuccessAlert(event);
-        displayPizzas(event);
+        updateChoiceBox();
+        showAlert("Cancel Success!", "Cancelled!");
+        soBox.getItems().remove(currentNumb);
 
-
+        if (!soBox.getItems().isEmpty()) {
+            soBox.setValue(soBox.getItems().get(0));
+            displayPizzas(event);
+        } else {
+            totalText.clear();
+            orderList.setItems(null);
+        }
     }
     private boolean contains(ArrayList<Integer> list, int orderNumber){
-        for(int i =0; i<list.size(); i++){
-            if(list.get(i) == orderNumber){
+        for (Integer integer : list) {
+            if (integer == orderNumber) {
                 return true;
             }
         }
@@ -176,64 +142,34 @@ public class StoreOrderController implements Initializable {
 
     private void removeOrderPlaced(int orderNumber){
         ArrayList<Integer> ordersPlaced = mainController.getReference().getOrdersPlaced();
-        for(int i =0; i<ordersPlaced.size(); i++){
+        for (int i =0; i<ordersPlaced.size(); i++){
             if(ordersPlaced.get(i) == orderNumber){
                 ordersPlaced.remove(i);
                 return;
             }
         }
     }
-    private boolean allOrdersPlaced(StoreOrders orders){
-        orders = mainController.getStoreOrders();
-        ArrayList<Integer> ordersPlaced = mainController.getReference().getOrdersPlaced();
-        currentOrderNumbers = mainController.getStoreOrders().getOrderNumbers();
 
+    private boolean allOrdersPlaced(){
+        orders = mainController.getReference().getStoreOrders();
+        currentOrderNumbers = mainController.getReference().getStoreOrders().getOrderNumbers();
         int index = currentOrderNumbers.get(currentOrderNumbers.size()-1);
         return orders.find(index).getPizzas().isEmpty();
 
     }
     @FXML
-    void exportErrorAlert(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Export Error");
-        alert.setContentText("Could Not Export");
-        alert.showAndWait();
-    }
-
-    @FXML
-    void exportSuccessAlert(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Export Successful");
-        alert.setContentText("Successfully Exported Store Orders");
-        alert.showAndWait();
-    }
-
-    @FXML
-    void orderNotPlacedExportAlert(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Export Error");
-        alert.setContentText("Last Order Has Not Been Officially Placed");
-        alert.showAndWait();
-    }
-    @FXML
-    void exportToFile(ActionEvent event){
-
+    private void exportToFile(ActionEvent event){
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
-
-        if(!allOrdersPlaced(orders)){
-            orderNotPlacedExportAlert(event);
+        if(!allOrdersPlaced()){
+            showAlert("Not Placed", "Order not Placed");
             return;
         }
-
         boolean expSuccess = orders.export(stage);
-
         if(!expSuccess){
-            exportErrorAlert(event);
+            showAlert("Error", "Could not export");
             return;
         }
-        exportSuccessAlert(event);
-
+        showAlert("Success!", "Exported!");
     }
-
 }

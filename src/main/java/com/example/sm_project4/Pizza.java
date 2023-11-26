@@ -19,9 +19,7 @@ public abstract class Pizza {
         for (String topping : toppings) {
             toppingsOutput.append(topping).append(", ");
         }
-
-        // Remove the trailing comma and space
-        if (toppingsOutput.length() > 0) {
+        if (!toppingsOutput.isEmpty()) {
             toppingsOutput.setLength(toppingsOutput.length() - 2);
         }
         String formattedPrice = String.format("%.2f", price());

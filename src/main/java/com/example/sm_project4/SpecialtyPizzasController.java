@@ -14,11 +14,12 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class SpecialtyPizzasController {
-    public TextField tomato_alfredo;
+
+    @FXML
+    private TextField tomato_alfredo;
     private MainMenuController mainMenuController;
 
     @FXML
@@ -42,7 +43,6 @@ public class SpecialtyPizzasController {
     @FXML
     private ImageView pizzaImage;
 
-    private Pizza pizza;
 
     public void setMainController(MainMenuController controller) {
         mainMenuController = controller;
@@ -51,7 +51,7 @@ public class SpecialtyPizzasController {
     @FXML
     private void onBackButtonClick(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
-        Scene mainMenuScene = new Scene(mainMenuRoot);
+        Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("RU Pizza");
@@ -143,7 +143,7 @@ public class SpecialtyPizzasController {
     @FXML
     public void handleAddToOrder() {
 
-        pizza = PizzaMaker.createPizza(pizzaDropdown.getValue());
+        Pizza pizza = PizzaMaker.createPizza(pizzaDropdown.getValue());
         pizza.sauce = Sauce.TOMATO;
 
         if (pizza.toString().equals("Seafood") ) {
@@ -160,9 +160,6 @@ public class SpecialtyPizzasController {
 
         Order currentOrder = orders.find(currentOrderNumber);
         currentOrder.addPizza(pizza);
-        ArrayList<String> pizzas = currentOrder.getPizzas();
-        System.out.println(pizzas);
-
         orderAddedPopup();
         reset();
     }

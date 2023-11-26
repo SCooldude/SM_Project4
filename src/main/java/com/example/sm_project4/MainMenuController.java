@@ -3,17 +3,12 @@ package com.example.sm_project4;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 
 public class MainMenuController {
@@ -26,10 +21,9 @@ public class MainMenuController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("BuildYourOwnPizza.fxml"));
 
         Parent buildYourOwnRoot = loader.load();
-        Scene buildYourOwnScene = new Scene(buildYourOwnRoot);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Customize Your Pizza");
+        Scene buildYourOwnScene = new Scene(buildYourOwnRoot);
 
         stage.setScene(buildYourOwnScene);
         stage.show();
@@ -97,6 +91,4 @@ public class MainMenuController {
 
     public ArrayList<Integer> getOrdersPlaced(){ return ordersPlaced;}
 
-    public void setMainApplication(HelloApplication mainApplication) {
-    }
 }

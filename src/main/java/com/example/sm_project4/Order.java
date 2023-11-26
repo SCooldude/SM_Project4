@@ -31,9 +31,6 @@ public class Order {
         }
         return total;
     }
-    public Pizza getPizza(int index){
-        return pizzas.get(index);
-    }
     public int getOrderNumber() {
         return orderNumber;
     }

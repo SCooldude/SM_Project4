@@ -22,7 +22,6 @@ import java.util.Objects;
 public class CurrentOrderController {
 
     private MainMenuController mainController;
-
     @FXML
     private TextField orderNumberTextField;
     @FXML
@@ -41,14 +40,14 @@ public class CurrentOrderController {
         setPrices();
     }
     @FXML
-    void setOrderNumber() {
+    private void setOrderNumber() {
         String currentOrderNum = String.valueOf(mainController.getStoreOrders().getAvailable_OrderNumber());
         orderNumberTextField.setText(currentOrderNum);
     }
     @FXML
     private void onBackButtonClick(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
-        Scene mainMenuScene = new Scene(mainMenuRoot);
+        Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("RU Pizza");
@@ -56,7 +55,7 @@ public class CurrentOrderController {
         stage.show();
     }
     @FXML
-    void setPizzas() {
+    private void setPizzas() {
         int currentOrderNum = mainController.getStoreOrders().getAvailable_OrderNumber();
         StoreOrders orders = mainController.getStoreOrders();
         Order currentOrder = orders.find(currentOrderNum);
@@ -65,7 +64,7 @@ public class CurrentOrderController {
         currentOrdersListView.setItems(pizzaString);
     }
     @FXML
-    void setPrices() {
+    private void setPrices() {
         int currentOrderNum = mainController.getStoreOrders().getAvailable_OrderNumber();
         StoreOrders orders = mainController.getStoreOrders();
         Order currentOrder = orders.find(currentOrderNum);
@@ -87,7 +86,12 @@ public class CurrentOrderController {
 
         StoreOrders orders = mainController.getStoreOrders();
         Order currentOrder = orders.find(mainController.getStoreOrders().getAvailable_OrderNumber());
-        currentOrder.removePizza(selectedIndex);
+        try {
+            currentOrder.removePizza(selectedIndex);
+        } catch (IndexOutOfBoundsException e) {
+            showAlert("Error", "No pizza to remove at the selected index");
+            return;
+        }
         setPizzas();
         setPrices();
     }
@@ -99,37 +103,25 @@ public class CurrentOrderController {
 
         ArrayList<String> pizzaList = orders.find(currIndex).getPizzas();
         if (pizzaList.isEmpty()) {
-            emptyPizzaPopup();
+            showAlert("Empty", "No pizzas to place");
             return;
         }
 
         orders.addOrder(orders.find(currIndex));
-        mainController.getOrdersPlaced().add(currIndex); //purpose since all orders whether it was placed or not shows in storeOrders
+        mainController.getOrdersPlaced().add(currIndex);
 
         setPizzas();
         setPrices();
         setOrderNumber();
-        orderSuccessPopup();
+        showAlert("Success!", "Order Placed!");
 
     }
-    void emptyPizzaPopup() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Order Warning");
-        alert.setContentText("Cannot place an order without any pizzas!");
-        alert.showAndWait();
-    }
-
-    /**
-     * Create popup for successful order.
-     */
-    void orderSuccessPopup() {
+    private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Order Success");
-        alert.setContentText("Your order was successfully placed!");
+        alert.setTitle(title);
+        alert.setContentText(content);
         alert.showAndWait();
     }
-
-
 }
 
 
