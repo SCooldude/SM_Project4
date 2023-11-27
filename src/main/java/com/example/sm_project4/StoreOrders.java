@@ -46,12 +46,12 @@ public class StoreOrders {
     }
 
     public ArrayList<Integer> getOrderNumbers(){
-        ArrayList<Integer> orderNumb = new ArrayList<>();
+        ArrayList<Integer> num = new ArrayList<>();
         for (Order storeOrder : this.storeOrders) {
-            int tempNum = storeOrder.getOrderNumber();
-            orderNumb.add(tempNum);
+            int temp = storeOrder.getOrderNumber();
+            num.add(temp);
         }
-        return orderNumb;
+        return num;
     }
 
     public Order find(int orderNumber){
@@ -63,7 +63,7 @@ public class StoreOrders {
         return storeOrders.get(0);
     }
 
-    public int numberOfOrders(){
+    public int numOrders(){
         return this.storeOrders.size();
     }
 
@@ -71,49 +71,51 @@ public class StoreOrders {
         Order order = storeOrders.get(index);
         int orderNumber = order.getOrderNumber();
         double total = order.totalCost();
-        double tax = 0.06625;
-        total = (total*tax) + total;
+        double taxRate = 0.06625;
+        total = (total * taxRate) + total;
 
-        StringBuilder returnString = new StringBuilder("Order Number " + orderNumber);
-        ArrayList<String> pizzaStrings = order.getPizzaStrings();
-        if(pizzaStrings.isEmpty()){
+        StringBuilder resultString = new StringBuilder("Order Number " + orderNumber);
+        ArrayList<String> strings = order.getPizzaStrings();
+
+        if (strings.isEmpty()) {
             return "";
         }
-        for (String pizzaString : pizzaStrings) {
-            returnString.append("\n").append(pizzaString);
+
+        for (String pizzaD : strings) {
+            resultString.append("\n").append(pizzaD);
         }
-        String totalString = new DecimalFormat("#,##0.00").format(total);
-        returnString.append("\n" + "Total Price: $").append(totalString);
-        return returnString.toString();
+
+        String formattedTotal = new DecimalFormat("#,##0.00").format(total);
+        resultString.append("\nTotal Price: $").append(formattedTotal);
+
+        return resultString.toString();
     }
 
-    public boolean export(Stage stage){
+
+
+    public boolean export(Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");
-        ExtensionFilter ex1 = new ExtensionFilter("Text Files", "*.txt");
-        fileChooser.getExtensionFilters().add(ex1);
+        ExtensionFilter filter = new ExtensionFilter("Text Files", "*.txt");
+        fileChooser.getExtensionFilters().add(filter);
         File selectedFile = fileChooser.showSaveDialog(stage);
 
-        if(selectedFile == null){
+        if (selectedFile == null) {
             return false;
         }
-        StringBuilder finalProduct = new StringBuilder();
-        for(int i =0; i<numberOfOrders(); i++){
-            finalProduct.append(orderToString(i));
-            finalProduct.append("\n\n");
+        StringBuilder fileContent = new StringBuilder();
+        for (Order currentOrder : storeOrders) {
+            fileContent.append(orderToString(currentOrder.getOrderNumber()));
+            fileContent.append("\n\n");
         }
-
-        String absPath = selectedFile.getAbsolutePath();
-        try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter(absPath));
-            writer.write(finalProduct.toString());
+        String path = selectedFile.getAbsolutePath();
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(fileContent.toString());
             writer.close();
             return true;
-        } catch(IOException e){
+        } catch (IOException e) {
             return false;
         }
-
     }
-
-
 }

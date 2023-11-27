@@ -28,7 +28,7 @@ public class StoreOrderController implements Initializable {
     @FXML
     private ChoiceBox<Integer> choiceBox;
     private StoreOrders sOrder;
-    private ArrayList<Integer> currentOrderNumb;
+    private ArrayList<Integer> currentNumbers;
 
     private MainMenuController mainController = new MainMenuController().get_control();
 
@@ -36,18 +36,27 @@ public class StoreOrderController implements Initializable {
         mainController = controller;
     }
 
+    @FXML
+    private void BackButton(ActionEvent event) throws IOException {
+        Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
+        Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
 
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("RU Pizza");
+        stage.setScene(mainMenuScene);
+        stage.show();
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sOrder = mainController.getStores();
-        if (sOrder.numberOfOrders() == 0) {
-            showAlert("No Pizza", "Nothing available");
+
+        if (sOrder.numOrders() - 1 == 0) {
+            showAlert("No Pizza","Nothing available");
             return;
         }
-        currentOrderNumb = sOrder.getOrderNumbers();
-        choiceBox.getItems().addAll(currentOrderNumb);
-        choiceBox.setOnAction(this::displayPizzas);
-        choiceBox.setValue(0);
+        currentNumbers = sOrder.getOrderNumbers();
+        choiceBox.getItems().addAll(currentNumbers);
+        choiceBox.setOnAction(this::showPizza);
     }
     @FXML
     private void setPrice() {
@@ -58,22 +67,13 @@ public class StoreOrderController implements Initializable {
         String totalString = new DecimalFormat("#,##0.00").format(total);
         totalTx.setText(totalString);
     }
-
     @FXML
-    private void updateChoiceBox() {
-        choiceBox.getItems().removeAll(currentOrderNumb);
-        currentOrderNumb = mainController.getStores().getOrderNumbers();
-        choiceBox.getItems().addAll(currentOrderNumb);
-
-    }
-    @FXML
-    private void displayPizzas(ActionEvent event) {
-        if (choiceBox.getValue() == null || sOrder.numberOfOrders() == 0) {
+    private void showPizza(ActionEvent event) {
+        if (choiceBox.getValue() == null) {
             totalTx.setText("");
             orderList.setItems(null);
             return;
         }
-
         Order selectedOrder = sOrder.find(choiceBox.getValue());
         ArrayList<String> pizzas = selectedOrder.getPizzaStrings();
         ObservableList<String> pizzaString = FXCollections.observableArrayList(pizzas);
@@ -89,33 +89,31 @@ public class StoreOrderController implements Initializable {
     }
 
     @FXML
-    private void cancelOrder(ActionEvent event) {
+    private void cancelOrder() {
+
         if (choiceBox.getValue() == null) {
             showAlert("Null", "Nothing selected");
             return;
         }
 
         ArrayList<Integer> ordersPlaced = mainController.get_control().get_placed();
-        int currentNumb = choiceBox.getValue();
+        int number = choiceBox.getValue();
 
-        if (!contains(ordersPlaced, currentNumb)) {
+        if (!contains(ordersPlaced, number)) {
             showAlert("Cancel", "Nothing placed");
             return;
         }
         sOrder = mainController.getStores();
-        ArrayList<String> pizzaList = sOrder.find(currentNumb).getPizzaStrings();
+        ArrayList<String> pizzaList = sOrder.find(number).getPizzaStrings();
         if (pizzaList.isEmpty()) {
             showAlert("Order", "Nothing in order");
             return;
         }
-        removeOrderPlaced(currentNumb);
-        updateChoiceBox();
+        remove_Order(number);
+        choiceBox.getItems().remove(number);
         showAlert("Cancel Success!", "Cancelled!");
-        choiceBox.getItems().remove(currentNumb);
-
         if (!choiceBox.getItems().isEmpty()) {
             choiceBox.setValue(choiceBox.getItems().get(0));
-            displayPizzas(event);
         } else {
             totalTx.clear();
             orderList.setItems(null);
@@ -130,43 +128,33 @@ public class StoreOrderController implements Initializable {
         return false;
     }
 
-    private void removeOrderPlaced(int orderNumber){
+    private void remove_Order(int orderNumber){
         ArrayList<Integer> ordersPlaced = mainController.get_control().get_placed();
-        for (int i =0; i<ordersPlaced.size(); i++){
-            if(ordersPlaced.get(i) == orderNumber){
+        for (int i = 0; i < ordersPlaced.size(); i++){
+            if (ordersPlaced.get(i) == orderNumber){
                 ordersPlaced.remove(i);
                 return;
             }
         }
     }
 
-    private boolean allOrdersPlaced(){
+    private boolean allOrders(){
         sOrder = mainController.get_control().getStores();
-        currentOrderNumb = mainController.get_control().getStores().getOrderNumbers();
-        int index = currentOrderNumb.get(currentOrderNumb.size()-1);
+        currentNumbers = mainController.get_control().getStores().getOrderNumbers();
+        int index = currentNumbers.get(currentNumbers.size()-1);
         return sOrder.find(index).getPizzaStrings().isEmpty();
 
-    }
-    @FXML
-    private void BackButton(ActionEvent event) throws IOException {
-        Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
-        Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("RU Pizza");
-        stage.setScene(mainMenuScene);
-        stage.show();
     }
     @FXML
     private void exportToFile(ActionEvent event){
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
-        if(!allOrdersPlaced()){
+        if(!allOrders()){
             showAlert("Not Placed", "Order not Placed");
             return;
         }
-        boolean expSuccess = sOrder.export(stage);
-        if(!expSuccess){
+        boolean exported = sOrder.export(stage);
+        if(!exported){
             showAlert("Error", "Could not export");
             return;
         }

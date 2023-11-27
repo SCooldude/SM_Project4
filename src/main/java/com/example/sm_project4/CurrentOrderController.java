@@ -39,11 +39,6 @@ public class CurrentOrderController {
         initializePrice();
     }
     @FXML
-    private void setOrderNumber() {
-        String orderNumber = String.valueOf(mainController.getStores().nextAvailableNumber());
-        orderNumberTextField.setText(orderNumber);
-    }
-    @FXML
     private void BackButton(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
         Scene mainMenuScene = new Scene(mainMenuRoot, 450, 550);
@@ -54,13 +49,9 @@ public class CurrentOrderController {
         stage.show();
     }
     @FXML
-    private void initializePizza() {
-        int currentOrderNum = mainController.getStores().nextAvailableNumber();
-        StoreOrders orders = mainController.getStores();
-        Order currentOrder = orders.find(currentOrderNum);
-        ArrayList<String> pizzas = currentOrder.getPizzaStrings();
-        ObservableList<String> pizzaString = FXCollections.observableArrayList(pizzas);
-        currentOrdersListView.setItems(pizzaString);
+    private void setOrderNumber() {
+        String orderNumber = String.valueOf(mainController.getStores().nextAvailableNumber());
+        orderNumberTextField.setText(orderNumber);
     }
     @FXML
     private void initializePrice() {
@@ -77,6 +68,15 @@ public class CurrentOrderController {
         double total = subtotalDouble + tax;
         String totalString = new DecimalFormat("#,##0.00").format(total);
         orderTotalTextField.setText(String.valueOf(totalString));
+    }
+    @FXML
+    private void initializePizza() {
+        int currentOrderNum = mainController.getStores().nextAvailableNumber();
+        StoreOrders orders = mainController.getStores();
+        Order currentOrder = orders.find(currentOrderNum);
+        ArrayList<String> pizzas = currentOrder.getPizzaStrings();
+        ObservableList<String> pizzaString = FXCollections.observableArrayList(pizzas);
+        currentOrdersListView.setItems(pizzaString);
     }
     @FXML
     protected void handleRemovePizza() {
