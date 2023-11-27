@@ -16,6 +16,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Controller class for the Specialty Pizzas view.
+ * Handles user interactions and updates related to specialty pizzas.
+ * Works in conjunction with JavaFX elements defined in the associated FXML file.
+ * @author Fraidoon Pourooshasb, Samman Pandey
+ */
 public class SpecialtyPizzasController {
 
     @FXML
@@ -43,13 +49,18 @@ public class SpecialtyPizzasController {
     @FXML
     private ImageView image;
 
-
+    /**
+     * Sets the reference to the main menu controller.
+     * @param controller The instance of the main menu controller.
+     */
     public void setMainMenuController(MainMenuController controller) {
         mainMenuController = controller;
     }
 
-
-
+    /**
+     * Initializes the controller.
+     * Sets default values and listeners for UI elements.
+     */
     public void initialize() {
         pizzaDropdown.setValue("Deluxe");
         String deluxeImagePath = "/com/example/sm_project4/deluxe.jpeg";
@@ -68,21 +79,26 @@ public class SpecialtyPizzasController {
         extraCheese.selectedProperty().addListener((cheese) -> updatePizzaPrice());
     }
 
+    /**
+     * Handles the selection of a pizza from the dropdown.
+     * Updates the pizza image and toppings list based on the selected pizza.
+     */
     @FXML
     private void handlePizzaSelection() {
         String selectedPizza = pizzaDropdown.getValue();
         String imagePath = "/com/example/sm_project4/" + selectedPizza.toLowerCase() + ".jpeg";
         Image image = new Image(Objects.requireNonNull(getClass().getResource(imagePath)).toExternalForm());
         this.image.setImage(image);
-        if (Objects.equals(pizzaDropdown.getValue(), "Seafood")) {
-            tomato_alfredo.setText("Alfredo");
-        }
-        else {
-            tomato_alfredo.setText("Tomato");
-        }
+
+        tomato_alfredo.setText(Objects.equals(pizzaDropdown.getValue(), "Seafood") ? "Alfredo" : "Tomato");
+
         updateToppingsList(selectedPizza);
     }
 
+    /**
+     * Updates the toppings list based on the selected pizza.
+     * @param selectedPizza The selected pizza type.
+     */
     private void updateToppingsList(String selectedPizza) {
         ObservableList<Object> toppingsList = FXCollections.observableArrayList();
 
@@ -94,11 +110,16 @@ public class SpecialtyPizzasController {
             default -> toppingsList.addAll("Shrimp", "Squid", "Crab Meats");
         }
         toppingsListView.setItems(toppingsList);
+
         updatePizzaPrice();
     }
 
+    /**
+     * Updates the pizza price based on size and toppings.
+     */
     private void updatePizzaPrice() {
         double basePrice;
+
         switch (pizzaDropdown.getValue()) {
             case "Deluxe" -> basePrice = getSizeBasePrice(14.99);
             case "Seafood" -> basePrice = getSizeBasePrice(17.99);
@@ -115,8 +136,14 @@ public class SpecialtyPizzasController {
         Amount.setText(String.format("%.2f", totalPrice));
     }
 
+    /**
+     * Calculates the base price based on pizza size.
+     * @param small_Price The base price for a small-sized pizza.
+     * @return The calculated base price based on the selected size.
+     */
     private double getSizeBasePrice(double small_Price) {
         RadioButton selectedSize = (RadioButton) size.getSelectedToggle();
+
         switch (selectedSize.getText()) {
             case "Small" -> {
                 return small_Price;
@@ -131,13 +158,16 @@ public class SpecialtyPizzasController {
         }
     }
 
+    /**
+     * Handles adding the selected pizza to the order.
+     * Creates a Pizza object based on user selections and adds it to the current order.
+     */
     @FXML
     public void handleAddToOrder() {
-
         Pizza pizza = PizzaMaker.createPizza(pizzaDropdown.getValue());
         pizza.sauce = Sauce.TOMATO;
 
-        if (pizza.toString().equals("Seafood") ) {
+        if (pizza.toString().equals("Seafood")) {
             pizza.sauce = Sauce.ALFREDO;
         }
 
@@ -147,22 +177,32 @@ public class SpecialtyPizzasController {
 
         StoreOrders orders = mainMenuController.getStores();
         int currentOrderNumber = orders.nextAvailableNumber();
-
         Order currentOrder = orders.find(currentOrderNumber);
         currentOrder.addPizza(pizza);
+
         orderAddedPopup();
         reset();
     }
 
+    /**
+     * Resets UI elements to default values.
+     */
     private void reset() {
         pizzaDropdown.setValue("Deluxe");
         RadioButton smallRadioButton = (RadioButton) size.getToggles().get(0);
         smallRadioButton.setSelected(true);
         extraSauce.setSelected(false);
         extraCheese.setSelected(false);
+
         updateToppingsList("Deluxe");
         updatePizzaPrice();
     }
+
+    /**
+     * Handles going back to the main menu.
+     * @param event The ActionEvent triggered by the Back button.
+     * @throws IOException If an I/O error occurs during the navigation.
+     */
     @FXML
     private void BackButton(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
@@ -174,6 +214,9 @@ public class SpecialtyPizzasController {
         stage.show();
     }
 
+    /**
+     * Shows an information alert indicating that the pizza has been added to the order.
+     */
     private void orderAddedPopup() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");

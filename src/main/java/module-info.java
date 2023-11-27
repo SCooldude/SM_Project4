@@ -1,4 +1,4 @@
-module com.example.sm_project4 {
+module com.example.sm_project {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -8,4 +8,3 @@ module com.example.sm_project4 {
     opens com.example.sm_project4 to javafx.fxml;
     exports com.example.sm_project4;
 }
-//hi

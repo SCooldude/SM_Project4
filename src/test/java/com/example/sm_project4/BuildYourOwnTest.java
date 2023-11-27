@@ -1,7 +1,7 @@
 package com.example.sm_project4;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BuildYourOwnTest {
 

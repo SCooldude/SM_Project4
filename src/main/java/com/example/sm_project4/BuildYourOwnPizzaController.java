@@ -14,6 +14,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * This class represents the controller for the BuildYourOwnPizza.fxml file.
+ * It handles user interactions and updates related to building custom pizzas.
+ * It utilizes JavaFX components for the GUI.
+ * The class includes methods for initializing, updating pizza details, handling toppings,
+ * and placing orders.
+ * It communicates with the MainMenuController to access store orders.
+ *
+ * @author Fraidoon Pourooshasb, Samman Pandey
+ */
 public class BuildYourOwnPizzaController {
 
     private MainMenuController mainMenuController;
@@ -42,10 +52,21 @@ public class BuildYourOwnPizzaController {
     @FXML
     private CheckBox extraCheeseCheckbox;
 
+    /**
+     * Sets the mainMenuController for communication with store orders.
+     *
+     * @param controller The MainMenuController instance.
+     */
     public void setMainMenuController(MainMenuController controller) {
         mainMenuController = controller;
     }
 
+    /**
+     * Handles the BackButton action, returning to the main menu.
+     *
+     * @param event The ActionEvent triggered by the BackButton.
+     * @throws IOException If an error occurs during loading the main menu FXML.
+     */
     @FXML
     private void BackButton(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
@@ -57,6 +78,10 @@ public class BuildYourOwnPizzaController {
         stage.show();
     }
 
+    /**
+     * Initializes the BuildYourOwnPizzaController.
+     * Sets default values, loads pizza image, and sets event listeners.
+     */
     public void initialize() {
         sizeDropdown.setValue("Small");
         String deluxeImagePath = "/com/example/sm_project4/deluxe.jpeg";
@@ -68,6 +93,11 @@ public class BuildYourOwnPizzaController {
         extraCheeseCheckbox.selectedProperty().addListener((cheese) -> updatePizzaPrice());
     }
 
+    /**
+     * Displays an alert with the given message.
+     *
+     * @param message The message to be displayed in the alert.
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -76,6 +106,10 @@ public class BuildYourOwnPizzaController {
         alert.showAndWait();
     }
 
+    /**
+     * Handles the addition of toppings to the pizza.
+     * Checks the number of toppings and updates the pizza price accordingly.
+     */
     public void handleAddTopping() {
         String selectedTopping = additionalToppingsListView.getSelectionModel().getSelectedItem();
         if (selectedTopping != null && selectedToppingsListView.getItems().size() <= 6) {
@@ -87,6 +121,10 @@ public class BuildYourOwnPizzaController {
         }
     }
 
+    /**
+     * Handles the removal of toppings from the pizza.
+     * Checks the number of toppings and updates the pizza price accordingly.
+     */
     public void handleRemoveTopping() {
         String selectedTopping = selectedToppingsListView.getSelectionModel().getSelectedItem();
 
@@ -98,6 +136,10 @@ public class BuildYourOwnPizzaController {
             showAlert("Minimum 3 toppings required.");
         }
     }
+
+    /**
+     * Updates the pizza price based on selected options and toppings.
+     */
     private void updatePizzaPrice() {
         int selectedToppingsCount = selectedToppingsListView.getItems().size();
         double additionalToppingsCost = Math.max(selectedToppingsCount - 3, 0) * 1.49;
@@ -108,6 +150,12 @@ public class BuildYourOwnPizzaController {
 
         amountTextField.setText(String.format("%.2f", totalPrice));
     }
+
+    /**
+     * Calculates the cost based on the selected pizza size.
+     *
+     * @return The cost of the selected pizza size.
+     */
     private double calculateSizeCost() {
         String selectedSize = sizeDropdown.getValue();
         return switch (selectedSize) {
@@ -117,8 +165,11 @@ public class BuildYourOwnPizzaController {
         };
     }
 
+    /**
+     * Handles the placement of the pizza order.
+     * Validates the number of toppings and updates the store order accordingly.
+     */
     public void handlePlaceOrder() {
-
         if (selectedToppingsListView.getItems().size() <= 2) {
             showAlert("Not Enough Toppings");
             return;
@@ -141,6 +192,10 @@ public class BuildYourOwnPizzaController {
         reset();
     }
 
+    /**
+     * Resets the pizza builder to default values.
+     * Clears selected and additional toppings, resets checkboxes, and sets default size.
+     */
     private void reset() {
         sizeDropdown.setValue("Small");
         extraCheeseCheckbox.setSelected(false);
@@ -167,6 +222,10 @@ public class BuildYourOwnPizzaController {
 
         two_sauce.selectToggle(two_sauce.getToggles().get(0));
     }
+
+    /**
+     * Displays a popup alert indicating that the pizza has been added to the order.
+     */
     private void OrderAddedPopup() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");

@@ -1,6 +1,5 @@
 package com.example.sm_project4;
 
-
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -12,30 +11,52 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * Manages a collection of store orders.
+ * Handles order creation, retrieval, and export functionality.
+ * @author Fraidoon Pourooshasb, Samman Pandey
+ */
 public class StoreOrders {
 
     private final ArrayList<Order> storeOrders;
     private static int orderNumber = 0;
 
-    public StoreOrders(){
+    /**
+     * Constructs a new StoreOrders instance with an initial order.
+     */
+    public StoreOrders() {
         this.storeOrders = new ArrayList<>();
         ArrayList<Pizza> pizzaList = new ArrayList<>();
         Order firstOrder = new Order(0, pizzaList);
         this.storeOrders.add(firstOrder);
     }
 
+    /**
+     * Gets the next available order number.
+     * @return The next available order number.
+     */
     public int nextAvailableNumber() {
         return orderNumber;
     }
-    public int findIndexOfOrder(Order order){
-        for(int i =0; i<this.storeOrders.size(); i++){
-            if(storeOrders.get(i).getOrderNumber() == order.getOrderNumber()){
+
+    /**
+     * Finds the index of the given order in the list.
+     * @param order The order to find.
+     * @return The index of the order, or -1 if not found.
+     */
+    public int findIndexOfOrder(Order order) {
+        for (int i = 0; i < this.storeOrders.size(); i++) {
+            if (storeOrders.get(i).getOrderNumber() == order.getOrderNumber()) {
                 return i;
             }
         }
         return -1;
     }
 
+    /**
+     * Adds a new order to the list and increments the order number.
+     * @param order The order to add.
+     */
     public void addOrder(Order order) {
         int index = findIndexOfOrder(order);
         this.storeOrders.set(index, order);
@@ -45,7 +66,11 @@ public class StoreOrders {
         this.storeOrders.add(setOrder);
     }
 
-    public ArrayList<Integer> getOrderNumbers(){
+    /**
+     * Gets a list of order numbers.
+     * @return The list of order numbers.
+     */
+    public ArrayList<Integer> getOrderNumbers() {
         ArrayList<Integer> num = new ArrayList<>();
         for (Order storeOrder : this.storeOrders) {
             int temp = storeOrder.getOrderNumber();
@@ -54,7 +79,12 @@ public class StoreOrders {
         return num;
     }
 
-    public Order find(int orderNumber){
+    /**
+     * Finds and returns the order with the specified order number.
+     * @param orderNumber The order number to find.
+     * @return The order with the specified order number.
+     */
+    public Order find(int orderNumber) {
         for (Order storeOrder : this.storeOrders) {
             if (storeOrder.getOrderNumber() == orderNumber) {
                 return storeOrder;
@@ -63,11 +93,20 @@ public class StoreOrders {
         return storeOrders.get(0);
     }
 
-    public int numOrders(){
+    /**
+     * Gets the total number of orders.
+     * @return The total number of orders.
+     */
+    public int numOrders() {
         return this.storeOrders.size();
     }
 
-    public String orderToString(int index){
+    /**
+     * Converts an order to a formatted string.
+     * @param index The index of the order.
+     * @return The formatted string representation of the order.
+     */
+    public String orderToString(int index) {
         Order order = storeOrders.get(index);
         int orderNumber = order.getOrderNumber();
         double total = order.totalCost();
@@ -91,8 +130,11 @@ public class StoreOrders {
         return resultString.toString();
     }
 
-
-
+    /**
+     * Exports orders to a file.
+     * @param stage The stage used for displaying the file chooser dialog.
+     * @return True if the export is successful, false otherwise.
+     */
     public boolean export(Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");

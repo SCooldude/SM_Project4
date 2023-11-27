@@ -19,23 +19,41 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Store Order view.
+ * Handles displaying and managing store orders.
+ * Works in conjunction with JavaFX elements defined in the associated FXML file.
+ * @author Fraidoon Pourooshasb, Samman Pandey
+ */
 public class StoreOrderController implements Initializable {
 
     @FXML
     private ListView<String> orderList;
+
     @FXML
     private TextField totalTx;
+
     @FXML
     private ChoiceBox<Integer> choiceBox;
+
     private StoreOrders sOrder;
     private ArrayList<Integer> currentNumbers;
 
     private MainMenuController mainController = new MainMenuController().get_control();
 
+    /**
+     * Sets the reference to the main menu controller.
+     * @param controller The instance of the main menu controller.
+     */
     public void setMainMenuController(MainMenuController controller) {
         mainController = controller;
     }
 
+    /**
+     * Handles going back to the main menu.
+     * @param event The ActionEvent triggered by the Back button.
+     * @throws IOException If an I/O error occurs during the navigation.
+     */
     @FXML
     private void BackButton(ActionEvent event) throws IOException {
         Parent mainMenuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
@@ -46,18 +64,27 @@ public class StoreOrderController implements Initializable {
         stage.setScene(mainMenuScene);
         stage.show();
     }
+
+    /**
+     * Initializes the controller.
+     * Sets default values and listeners for UI elements.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sOrder = mainController.getStores();
 
         if (sOrder.numOrders() - 1 == 0) {
-            showAlert("No Pizza","Nothing available");
+            showAlert("No Pizza", "Nothing available");
             return;
         }
         currentNumbers = sOrder.getOrderNumbers();
         choiceBox.getItems().addAll(currentNumbers);
         choiceBox.setOnAction(this::showPizza);
     }
+
+    /**
+     * Sets the total price based on the selected order.
+     */
     @FXML
     private void setPrice() {
         int orderNum = choiceBox.getValue();
@@ -67,6 +94,11 @@ public class StoreOrderController implements Initializable {
         String totalString = new DecimalFormat("#,##0.00").format(total);
         totalTx.setText(totalString);
     }
+
+    /**
+     * Displays the pizzas of the selected order.
+     * @param event The ActionEvent triggered by selecting an order from the ChoiceBox.
+     */
     @FXML
     private void showPizza(ActionEvent event) {
         if (choiceBox.getValue() == null) {
@@ -81,6 +113,11 @@ public class StoreOrderController implements Initializable {
         setPrice();
     }
 
+    /**
+     * Displays an information alert.
+     * @param title The title of the alert.
+     * @param content The content of the alert.
+     */
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -88,9 +125,11 @@ public class StoreOrderController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Cancels the selected order.
+     */
     @FXML
     private void cancelOrder() {
-
         if (choiceBox.getValue() == null) {
             showAlert("Null", "Nothing selected");
             return;
@@ -109,7 +148,7 @@ public class StoreOrderController implements Initializable {
             showAlert("Order", "Nothing in order");
             return;
         }
-        remove_Order(number);
+        removeOrder(number);
         choiceBox.getItems().remove(number);
         showAlert("Cancel Success!", "Cancelled!");
         if (!choiceBox.getItems().isEmpty()) {
@@ -119,7 +158,14 @@ public class StoreOrderController implements Initializable {
             orderList.setItems(null);
         }
     }
-    private boolean contains(ArrayList<Integer> list, int orderNumber){
+
+    /**
+     * Checks if the list contains a specific order number.
+     * @param list The list to check.
+     * @param orderNumber The order number to check for.
+     * @return True if the order number is in the list, false otherwise.
+     */
+    private boolean contains(ArrayList<Integer> list, int orderNumber) {
         for (Integer integer : list) {
             if (integer == orderNumber) {
                 return true;
@@ -128,33 +174,46 @@ public class StoreOrderController implements Initializable {
         return false;
     }
 
-    private void remove_Order(int orderNumber){
+    /**
+     * Removes the order with the specified number from the placed orders list.
+     * @param orderNumber The order number to remove.
+     */
+    private void removeOrder(int orderNumber) {
         ArrayList<Integer> ordersPlaced = mainController.get_control().get_placed();
-        for (int i = 0; i < ordersPlaced.size(); i++){
-            if (ordersPlaced.get(i) == orderNumber){
+        for (int i = 0; i < ordersPlaced.size(); i++) {
+            if (ordersPlaced.get(i) == orderNumber) {
                 ordersPlaced.remove(i);
                 return;
             }
         }
     }
 
-    private boolean allOrders(){
+    /**
+     * Checks if all orders are placed.
+     * @return True if all orders are placed, false otherwise.
+     */
+    @FXML
+    private boolean allOrders() {
         sOrder = mainController.get_control().getStores();
         currentNumbers = mainController.get_control().getStores().getOrderNumbers();
-        int index = currentNumbers.get(currentNumbers.size()-1);
+        int index = currentNumbers.get(currentNumbers.size() - 1);
         return sOrder.find(index).getPizzaStrings().isEmpty();
-
     }
+
+    /**
+     * Exports the orders to a file.
+     * @param event The ActionEvent triggered by the Export button.
+     */
     @FXML
-    private void exportToFile(ActionEvent event){
+    private void exportToFile(ActionEvent event) {
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
-        if(!allOrders()){
+        if (!allOrders()) {
             showAlert("Not Placed", "Order not Placed");
             return;
         }
         boolean exported = sOrder.export(stage);
-        if(!exported){
+        if (!exported) {
             showAlert("Error", "Could not export");
             return;
         }
